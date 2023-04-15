@@ -37,7 +37,7 @@ Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kan
 3. Website siap digunakan
 
 ## Contributors
-### Kelas 02 - Kelompok 19
+### Kelas 02 - Kelompok 08
 | No. | Name | Student ID |
 | :---: | :---: | :---: |
 | 1. | Jova Andres Riski Sirait | 13520072 |
