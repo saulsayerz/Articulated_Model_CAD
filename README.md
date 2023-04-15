@@ -1,8 +1,8 @@
-# 3D WebGL Hollow Object 
-Program berbasis website ini dibuat untuk menyelesaikan Tugas Besar 2 IF3260 Grafika Komputer.
+# 3D WebGL Articulated Model
+Program berbasis website ini dibuat untuk menyelesaikan Tugas Besar 3 IF3260 Grafika Komputer.
 
 ## Deskripsi program
-Program dibuat berupa suatu perangkat lunak computer-aided design (CAD) 3 dimensi yang dijalankan dalam sebuah website. Website ini ditujukan untuk memenuhi Tugas Besar 2 pada mata kuliah IF3260 Grafika Komputer untuk tahun ajaran 2022/2023. Program ini dirancang dengan menggunakan bahasa pemrograman HTML, CSS, dan vanilla Javascript.
+Program dibuat berupa suatu perangkat lunak computer-aided design (CAD) 3 dimensi untuk model articulated yang dijalankan dalam sebuah website. Website ini ditujukan untuk memenuhi Tugas Besar 3 pada mata kuliah IF3260 Grafika Komputer untuk tahun ajaran 2022/2023. Program ini dirancang dengan menggunakan bahasa pemrograman HTML, CSS, dan vanilla Javascript.
 Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kanvas tersebut
 
 ## Fitur Wajib
@@ -32,17 +32,15 @@ Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kan
 - Pada VS Code, install ekstensi <strong>Live Server</strong>
 
 ### How to Run
-#### Cara 1
 1. Buka file index.html melalui VS Code
 2. Klik kanan, lalu klik `Open with Live Server`
 3. Website siap digunakan
-#### Cara 2
-Buka tautan berikut https://airathalca.github.io/IF3260_Tugas2_K02_G19/
 
 ## Contributors
 ### Kelas 02 - Kelompok 19
 | No. | Name | Student ID |
 | :---: | :---: | :---: |
 | 1. | Jova Andres Riski Sirait | 13520072 |
-| 2. | Saul Sayers | 13520094 |
-| 3. | Aira Thalca Avila Putra | 13520101 |
+| 2. | Dimas Shidqi Parikesit | 13520087 |
+| 3. | Saul Sayers | 13520094 |
+| 4. | Aira Thalca Avila Putra | 13520101 |
