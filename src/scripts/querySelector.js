@@ -87,3 +87,8 @@ export var radio = {
   obliqueRadio : document.getElementById("oblique"),
 }
 
+export var select = {
+  // ARTICULATED
+  select_texture: document.querySelector("#texture-dropdown"),
+}
+

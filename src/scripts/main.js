@@ -3,9 +3,11 @@ import { closeModal, modal, openModal } from "./help.js";
 import { degToRad, radToDeg } from "./helper.js";
 import mat4 from "./matrix.js";
 import Object from "./object.js";
-import { button, checkbox, radio, slider, value } from "./querySelector.js";
+import { button, checkbox, radio, slider, select, value } from "./querySelector.js";
 import { createProgram, drawScene } from "./script.js";
 import { generateTree } from "./componentTree.js";
+import { createTextureFromImage, createTextureFromEnvironment, createBumpTexture } from "./texture.js";
+
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
@@ -57,6 +59,7 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     selectedObject: root,
+    texture: model_penyu.texture_mode,
   };
 
   var defParams = {
@@ -69,11 +72,13 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
+    texture: model_penyu.texture_mode,
   };
 
   // setup UI
   defaultSlider();
   defaultCheckbox();
+  defaultSelect();
   slider.slider_transX.oninput = updatePosition(0);
   slider.slider_transY.oninput = updatePosition(1);
   slider.slider_transZ.oninput = updatePosition(2);
@@ -89,6 +94,8 @@ const main = () => {
   slider.slider_fudgeFactor.oninput = updateFudgeFactor();
 
   checkbox.check_shading.oninput = updateShading();
+
+  select.select_texture.onchange = updateTexture();
 
   button.button_reset.onclick = resetState();
   button.button_save.onclick = save();
@@ -235,6 +242,13 @@ const main = () => {
     };
   }
 
+  function updateTexture() {
+    return function (event) {
+      params.texture = event.target.value;
+      modelViewMatrix = drawBothScene();
+    };
+  }
+
   function defaultSlider() {
     // set default value innerHTML
     value.value_transX.innerHTML = defParams.translation[0];
@@ -270,6 +284,10 @@ const main = () => {
     checkbox.check_shading.checked = false;
   }
 
+  function defaultSelect() {
+    select.select_texture.value = defParams.texture;
+  }
+
   function resetState() {
     return function (event) {
       reset();
@@ -286,9 +304,11 @@ const main = () => {
     params.fudgeFactor = defParams.fudgeFactor;
     params.projType = defParams.projType;
     params.shading = defParams.shading;
+    params.texture = defParams.texture;
     radio.perspectiveRadio.checked = true;
     defaultSlider();
     defaultCheckbox();
+    defaultSelect();
     modelViewMatrix = drawBothScene();
   }
 
@@ -317,6 +337,14 @@ const main = () => {
     drawScene(gl, params);
     drawScene(gl2, params,false);
   }
+
+  createTextureFromImage(gl, prog);
+  createTextureFromEnvironment(gl, prog);
+  createBumpTexture(gl, prog);
+
+  createTextureFromImage(gl2, prog2);
+  createTextureFromEnvironment(gl2, prog2);
+  createBumpTexture(gl2, prog2);
 };
 
 window.onload = main;

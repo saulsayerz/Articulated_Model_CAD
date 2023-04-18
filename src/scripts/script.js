@@ -83,6 +83,11 @@ export function drawScene(gl, params, loop=true) {
     var normalLocation = gl.getUniformLocation(params.program, "u_normal");
     var shadingBool = gl.getUniformLocation(params.program, "u_shading");
     var fudgeLocation = gl.getUniformLocation(params.program, "u_fudgeFactor");
+    var uImage = gl.getUniformLocation(params.program, "u_image");
+    var uEnvironment = gl.getUniformLocation(params.program, "u_environment");
+    var uBump = gl.getUniformLocation(params.program, "u_bump");
+    var uDiffuseColorLocation = gl.getUniformLocation(params.program, "u_diffuseColor");
+    var textureMode = gl.getUniformLocation(params.program, "u_texture");  
   } else{
     gl.useProgram(params.program2);
     var modelLocation = gl.getUniformLocation(params.program2, "u_modelMatrix");
@@ -91,13 +96,22 @@ export function drawScene(gl, params, loop=true) {
     var normalLocation = gl.getUniformLocation(params.program2, "u_normal");
     var shadingBool = gl.getUniformLocation(params.program2, "u_shading");
     var fudgeLocation = gl.getUniformLocation(params.program2, "u_fudgeFactor");
+    var uImage = gl.getUniformLocation(params.program2, "u_image");
+    var uEnvironment = gl.getUniformLocation(params.program2, "u_environment");
+    var uBump = gl.getUniformLocation(params.program2, "u_bump");
+    var uDiffuseColorLocation = gl.getUniformLocation(params.program2, "u_diffuseColor");
+    var textureMode = gl.getUniformLocation(params.program2, "u_texture");  
   }
 
-  // var uSampler = gl.getUniformLocation(params.program, "u_sampler");
-  // var uTexture = gl.getUniformLocation(params.program, "u_texture");
-  // var textureMode1 = gl.getUniformLocation(params.program, "u_texture_mode");
-  // var textureMode2 = gl.getUniformLocation(params.program, "u_texture_mode_2");
   // var worldCamPos = gl.getUniformLocation(params.program, "u_worldCameraPosition");
+  
+  gl.uniform1i(textureMode, parseInt(params.texture, 10));
+
+  gl.uniform1i(uImage, 1);
+  gl.uniform1i(uEnvironment, 2);
+  gl.uniform1i(uBump, 3);
+
+  gl.uniform3fv(uDiffuseColorLocation, [0, 1, 1]);
 
   var projMatrix = mat4.ortho(
     -gl.canvas.clientWidth / 2,
