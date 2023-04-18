@@ -1,10 +1,10 @@
-import { drawScene, createProgram } from './script.js';
-import { model_penyu } from '../default_model/model_example.js';
-import { degToRad, radToDeg } from './helper.js';
-import { value, slider, checkbox, button, radio } from './querySelector.js';
-import { modal, openModal, closeModal } from './help.js';
-import mat4 from './matrix.js';
-import Object from './Object.js';
+import { model_penyu } from "../default_model/model_example.js";
+import { closeModal, modal, openModal } from "./help.js";
+import { degToRad, radToDeg } from "./helper.js";
+import mat4 from "./matrix.js";
+import Object from "./object.js";
+import { button, checkbox, radio, slider, value } from "./querySelector.js";
+import { createProgram, drawScene } from "./script.js";
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
@@ -21,17 +21,17 @@ const main = () => {
       object["vertices"],
       object["colors"],
       object["normals"],
-      object["children"],
-      object["siblings"],
+      object["child"],
+      object["sibling"]
     );
     defaultModel[object.name] = newPart;
   }
-  var root = model_penyu.root_name
-  window.onclick = function(event) {
+  var root = model_penyu.root_name;
+  window.onclick = function (event) {
     if (event.target == modal) {
       closeModal();
     }
-  }
+  };
 
   var params = {
     modelObject: defaultModel,
@@ -47,7 +47,7 @@ const main = () => {
     center: centerpoint(defaultModel[root]),
     fudgeFactor: 1,
     projType: "perspective",
-  }
+  };
 
   var defParams = {
     translation: [0, 0, 0],
@@ -59,7 +59,7 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
-  }
+  };
 
   // setup UI
   defaultSlider();
@@ -91,10 +91,10 @@ const main = () => {
   var modelViewMatrix = drawScene(gl, params);
 
   function load() {
-    return function(event) {
+    return function (event) {
       var file = event.target.files[0];
       var reader = new FileReader();
-      reader.onload = function(event) {
+      reader.onload = function (event) {
         var contents = event.target.result;
         var data = JSON.parse(contents);
         for (let object of data.parts) {
@@ -103,8 +103,8 @@ const main = () => {
             object["vertices"],
             object["colors"],
             object["normals"],
-            object["children"],
-            object["siblings"],
+            object["child"],
+            object["sibling"]
           );
           params.modelObject[object.name] = newPart;
         }
@@ -117,24 +117,25 @@ const main = () => {
   }
 
   function save() {
-    return function(event) {
+    return function (event) {
       var copyObj = JSON.parse(JSON.stringify(params.modelObject));
-      for (let i = 0; i < params.modelObject.vertices.length; i+=3) {
-        var res = mat4.multiplyVector(modelViewMatrix, [params.modelObject.vertices[i], 
-          params.modelObject.vertices[i+1], 
-          params.modelObject.vertices[i+2], 
-          1]
-        );
+      for (let i = 0; i < params.modelObject.vertices.length; i += 3) {
+        var res = mat4.multiplyVector(modelViewMatrix, [
+          params.modelObject.vertices[i],
+          params.modelObject.vertices[i + 1],
+          params.modelObject.vertices[i + 2],
+          1,
+        ]);
         copyObj.vertices[i] = res[0];
-        copyObj.vertices[i+1] = res[1];
-        copyObj.vertices[i+2] = res[2];
+        copyObj.vertices[i + 1] = res[1];
+        copyObj.vertices[i + 2] = res[2];
       }
       var data = JSON.stringify(copyObj);
-      var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
-      var url  = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.download    = "model.json";
-      a.href        = url;
+      var blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.download = "model.json";
+      a.href = url;
       a.textContent = "Download model.json";
       document.body.appendChild(a);
       a.click();
@@ -143,48 +144,40 @@ const main = () => {
   }
 
   function updatePosition(index) {
-    return function(event) {
+    return function (event) {
       params.translation[index] = event.target.value;
-      if (index == 0)
-        value.value_transX.innerHTML = params.translation[index];
+      if (index == 0) value.value_transX.innerHTML = params.translation[index];
       else if (index == 1)
         value.value_transY.innerHTML = params.translation[index];
-      else
-        value.value_transZ.innerHTML = params.translation[index];
+      else value.value_transZ.innerHTML = params.translation[index];
       modelViewMatrix = drawScene(gl, params);
     };
   }
 
   function updateRotation(index) {
-    return function(event) {
+    return function (event) {
       var angleInDegrees = event.target.value;
-      var angleInRadians = angleInDegrees * Math.PI / 180;
+      var angleInRadians = (angleInDegrees * Math.PI) / 180;
       params.rotation[index] = angleInRadians;
-      if (index == 0)
-        value.value_angleX.innerHTML = angleInDegrees;
-      else if (index == 1)
-        value.value_angleY.innerHTML = angleInDegrees;
-      else
-        value.value_angleZ.innerHTML = angleInDegrees;
+      if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
+      else if (index == 1) value.value_angleY.innerHTML = angleInDegrees;
+      else value.value_angleZ.innerHTML = angleInDegrees;
       modelViewMatrix = drawScene(gl, params);
     };
   }
 
   function updateScale(index) {
-    return function(event) {
+    return function (event) {
       params.scale[index] = event.target.value;
-      if (index == 0)
-        value.value_scaleX.innerHTML = params.scale[index];
-      else if (index == 1)
-        value.value_scaleY.innerHTML = params.scale[index];
-      else
-        value.value_scaleZ.innerHTML = params.scale[index];
+      if (index == 0) value.value_scaleX.innerHTML = params.scale[index];
+      else if (index == 1) value.value_scaleY.innerHTML = params.scale[index];
+      else value.value_scaleZ.innerHTML = params.scale[index];
       modelViewMatrix = drawScene(gl, params);
     };
   }
 
   function updateFudgeFactor() {
-    return function(event) {
+    return function (event) {
       params.fudgeFactor = event.target.value;
       value.value_fudgeFactor.innerHTML = params.fudgeFactor;
       modelViewMatrix = drawScene(gl, params);
@@ -192,7 +185,7 @@ const main = () => {
   }
 
   function updateZoom() {
-    return function(event) {
+    return function (event) {
       params.zoom = event.target.value;
       value.value_zoom.innerHTML = params.zoom;
       modelViewMatrix = drawScene(gl, params);
@@ -200,16 +193,16 @@ const main = () => {
   }
 
   function updateProjection() {
-    return function(event) {
+    return function (event) {
       params.projType = event.target.value;
       modelViewMatrix = drawScene(gl, params);
     };
   }
 
   function updateCameraAngle() {
-    return function(event) {
+    return function (event) {
       var angleInDegrees = event.target.value;
-      var angleInRadians = angleInDegrees * Math.PI / 180;
+      var angleInRadians = (angleInDegrees * Math.PI) / 180;
       params.cameraAngleRadians = angleInRadians;
       value.value_camera.innerHTML = angleInDegrees;
       modelViewMatrix = drawScene(gl, params);
@@ -217,15 +210,15 @@ const main = () => {
   }
 
   function updateCameraRadius() {
-    return function(event) {
+    return function (event) {
       params.cameraRadius = event.target.value;
       value.value_cameraR.innerHTML = params.cameraRadius;
       modelViewMatrix = drawScene(gl, params);
-    }
+    };
   }
 
   function updateShading() {
-    return function(event) {
+    return function (event) {
       params.shading = event.target.checked;
       modelViewMatrix = drawScene(gl, params);
     };
@@ -267,7 +260,7 @@ const main = () => {
   }
 
   function resetState() {
-    return function(event) {
+    return function (event) {
       reset();
     };
   }
@@ -292,16 +285,16 @@ const main = () => {
     let x = 0;
     let y = 0;
     let z = 0;
-    for (let i = 0; i < modelObject.vertices.length; i+=3) {
+    for (let i = 0; i < modelObject.vertices.length; i += 3) {
       x += modelObject.vertices[i];
-      y += modelObject.vertices[i+1];
-      z += modelObject.vertices[i+2];
+      y += modelObject.vertices[i + 1];
+      z += modelObject.vertices[i + 2];
     }
-    x /= modelObject.vertices.length/3;
-    y /= modelObject.vertices.length/3;
-    z /= modelObject.vertices.length/3;
+    x /= modelObject.vertices.length / 3;
+    y /= modelObject.vertices.length / 3;
+    z /= modelObject.vertices.length / 3;
     return [x, y, z];
   }
-}
+};
 
-window.onload = main
+window.onload = main;

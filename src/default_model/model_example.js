@@ -134,8 +134,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : ["head", "front_left_leg", "rear_left_leg", "front_right_leg", "rear_right_leg"],
-      "siblings" : []
+      "child" : "head",
+      "sibling" : ""
     },
     {
       "name" : "head",
@@ -261,8 +261,8 @@ export const model_penyu = {
         0, 1, 0,
         0, 1, 0
       ],
-      "children" : ["jaw"],
-      "siblings" : []
+      "child" : "jaw",
+      "sibling" : "front_left_leg"
     },
     {
       "name" : "front_left_leg",
@@ -395,8 +395,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : [],
-      "siblings" : []
+      "child" : "",
+      "sibling" : "rear_left_leg"
     },
     {
       "name" : "rear_left_leg",
@@ -529,8 +529,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : [],
-      "siblings" : []
+      "child" : "",
+      "sibling" : "front_right_leg"
     },
     {
       "name" : "front_right_leg",
@@ -663,8 +663,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : [],
-      "siblings" : []
+      "child" : "",
+      "sibling" : "rear_right_leg"
     },
     {
       "name" : "rear_right_leg",
@@ -797,8 +797,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : [],
-      "siblings" : []
+      "child" : "",
+      "sibling" : ""
     },
     {
       "name" : "jaw",
@@ -931,8 +931,8 @@ export const model_penyu = {
         0, -1, 0,
         0, -1, 0
       ],
-      "children" : [],
-      "siblings" : []
+      "child" : "",
+      "sibling" : ""
     }
   ]
 }

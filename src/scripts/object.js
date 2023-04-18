@@ -1,18 +1,11 @@
 class Object {
-  constructor(
-    name,
-    vertices,
-    colors,
-    normals,
-    children,
-    siblings,
-  ) {
+  constructor(name, vertices, colors, normals, child, sibling) {
     this.name = name;
     this.vertices = vertices;
     this.colors = colors;
     this.normals = normals;
-    this.children = children;
-    this.siblings = siblings;
+    this.child = child;
+    this.sibling = sibling;
   }
 }
 
