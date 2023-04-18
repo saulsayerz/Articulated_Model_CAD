@@ -1,9 +1,10 @@
 import { drawScene, createProgram } from './script.js';
-import { model_cube } from '../default_model/model_cube.js';
+import { model_penyu } from '../default_model/model_example.js';
 import { degToRad, radToDeg } from './helper.js';
 import { value, slider, checkbox, button, radio } from './querySelector.js';
 import { modal, openModal, closeModal } from './help.js';
 import mat4 from './matrix.js';
+import Object from './Object.js';
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
@@ -13,17 +14,28 @@ const main = () => {
     return;
   }
   var prog = createProgram(gl);
-  var defaultHollow= model_cube
-
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    closeModal();
+  var defaultModel = {};
+  for (let object of model_penyu.parts) {
+    let newPart = new Object(
+      object["name"],
+      object["vertices"],
+      object["colors"],
+      object["normals"],
+      object["children"],
+      object["siblings"],
+    );
+    defaultModel[object.name] = newPart;
   }
-}
+  var root = model_penyu.root_name
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
 
   var params = {
-    hollowObject: defaultHollow,
+    modelObject: defaultModel,
+    root: root,
     program: prog,
     translation: [0, 0, 0],
     rotation: [degToRad(0), degToRad(0), degToRad(0)],
@@ -32,10 +44,9 @@ window.onclick = function(event) {
     cameraAngleRadians: degToRad(0),
     cameraRadius: 200.0,
     shading: false,
-    center: centerpoint(defaultHollow),
+    center: centerpoint(defaultModel[root]),
     fudgeFactor: 1,
     projType: "perspective",
-
   }
 
   var defParams = {
@@ -73,12 +84,10 @@ window.onclick = function(event) {
   button.button_save.onclick = save();
   button.input_file.onchange = load();
   button.button_help.onclick = openModal;
-  button.button_clear.onclick = clearCanvas();
 
   radio.orthogonalRadio.onclick = updateProjection();
   radio.perspectiveRadio.onclick = updateProjection();
   radio.obliqueRadio.onclick = updateProjection();
-
   var modelViewMatrix = drawScene(gl, params);
 
   function load() {
@@ -88,20 +97,19 @@ window.onclick = function(event) {
       reader.onload = function(event) {
         var contents = event.target.result;
         var data = JSON.parse(contents);
-        if (params.hollowObject.positions.length === 0) {
-          params.hollowObject = data;
-        } else {
-          if (params.hollowObject.positions.length % 9 !== 0) {
-            params.hollowObject.positions = data.positions.concat(params.hollowObject.positions);
-            params.hollowObject.colors = data.colors.concat(params.hollowObject.colors);
-            params.hollowObject.normals = data.normals.concat(params.hollowObject.normals);
-          } else {
-            params.hollowObject.positions = params.hollowObject.positions.concat(data.positions);
-            params.hollowObject.colors = params.hollowObject.colors.concat(data.colors);
-            params.hollowObject.normals = params.hollowObject.normals.concat(data.normals);
-          }
+        for (let object of data.parts) {
+          let newPart = new Object(
+            object["name"],
+            object["vertices"],
+            object["colors"],
+            object["normals"],
+            object["children"],
+            object["siblings"],
+          );
+          params.modelObject[object.name] = newPart;
         }
-        params.center = centerpoint(params.hollowObject);
+        params.center = centerpoint(params.modelObject[data.root_name]);
+        params.root = data.root_name;
         reset();
       };
       reader.readAsText(file);
@@ -110,16 +118,16 @@ window.onclick = function(event) {
 
   function save() {
     return function(event) {
-      var copyObj = JSON.parse(JSON.stringify(params.hollowObject));
-      for (let i = 0; i < params.hollowObject.positions.length; i+=3) {
-        var res = mat4.multiplyVector(modelViewMatrix, [params.hollowObject.positions[i], 
-          params.hollowObject.positions[i+1], 
-          params.hollowObject.positions[i+2], 
+      var copyObj = JSON.parse(JSON.stringify(params.modelObject));
+      for (let i = 0; i < params.modelObject.vertices.length; i+=3) {
+        var res = mat4.multiplyVector(modelViewMatrix, [params.modelObject.vertices[i], 
+          params.modelObject.vertices[i+1], 
+          params.modelObject.vertices[i+2], 
           1]
         );
-        copyObj.positions[i] = res[0];
-        copyObj.positions[i+1] = res[1];
-        copyObj.positions[i+2] = res[2];
+        copyObj.vertices[i] = res[0];
+        copyObj.vertices[i+1] = res[1];
+        copyObj.vertices[i+2] = res[2];
       }
       var data = JSON.stringify(copyObj);
       var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
@@ -264,15 +272,6 @@ window.onclick = function(event) {
     };
   }
 
-  function clearCanvas() {
-    return function(event) {
-      params.hollowObject.positions = []
-      params.hollowObject.colors = []
-      params.hollowObject.normals = []
-      drawScene(gl, params);
-    };
-  }
-
   function reset() {
     params.translation = [...defParams.translation];
     params.rotation = [...defParams.rotation];
@@ -289,18 +288,18 @@ window.onclick = function(event) {
     modelViewMatrix = drawScene(gl, params);
   }
 
-  function centerpoint(hollowObject) {
+  function centerpoint(modelObject) {
     let x = 0;
     let y = 0;
     let z = 0;
-    for (let i = 0; i < hollowObject.positions.length; i+=3) {
-      x += hollowObject.positions[i];
-      y += hollowObject.positions[i+1];
-      z += hollowObject.positions[i+2];
+    for (let i = 0; i < modelObject.vertices.length; i+=3) {
+      x += modelObject.vertices[i];
+      y += modelObject.vertices[i+1];
+      z += modelObject.vertices[i+2];
     }
-    x /= hollowObject.positions.length/3;
-    y /= hollowObject.positions.length/3;
-    z /= hollowObject.positions.length/3;
+    x /= modelObject.vertices.length/3;
+    y /= modelObject.vertices.length/3;
+    z /= modelObject.vertices.length/3;
     return [x, y, z];
   }
 }
