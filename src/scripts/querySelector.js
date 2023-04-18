@@ -66,14 +66,17 @@ export var slider = {
 
 export var checkbox = {
   check_shading: document.querySelector("#check-shading"),
-}
+  check_component_shading: document.querySelector("#check-component-shading"),
+};
 
 export var button = {
   button_reset: document.querySelector("#reset"),
+  button_component_reset: document.querySelector("#reset-component"),
+
   input_file: document.querySelector("#file"),
   button_save: document.querySelector("#save"),
   button_help: document.querySelector("#help"),
-}
+};
 
 export var radio = {
   // ARTICULATED
@@ -82,8 +85,8 @@ export var radio = {
   obliqueRadio : document.getElementById("oblique"),
 
   // COMPONENT
-  orthogonalRadio : document.getElementById("orthogonal"),
-  perspectiveRadio : document.getElementById("perspective"),
-  obliqueRadio : document.getElementById("oblique"),
+  orthogonal_component_Radio : document.getElementById("orthogonal-component"),
+  perspective_component_Radio : document.getElementById("perspective-component"),
+  oblique_component_Radio : document.getElementById("oblique-component"),
 }
 

@@ -121,23 +121,23 @@ export function drawScene(gl, params, loop=true) {
   }
 
   var modelMatrix = mat4.translate(
-    params.translation[0],
-    params.translation[1],
-    params.translation[2]
+    params.modelObject[params.root].translation[0],
+    params.modelObject[params.root].translation[1],
+    params.modelObject[params.root].translation[2]
   );
   modelMatrix = mat4.multiply(
     modelMatrix,
     mat4.translate(params.center[0], params.center[1], params.center[2])
   );
-  modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.rotation[0]));
-  modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.rotation[1]));
-  modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.rotation[2]));
+  modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.modelObject[params.root].rotation[0]));
+  modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.modelObject[params.root].rotation[1]));
+  modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.modelObject[params.root].rotation[2]));
   modelMatrix = mat4.multiply(
     modelMatrix,
     mat4.scale(
-      params.scale[0] * params.zoom,
-      params.scale[1] * params.zoom,
-      params.scale[2] * params.zoom
+      params.modelObject[params.root].scale[0] * params.zoom,
+      params.modelObject[params.root].scale[1] * params.zoom,
+      params.modelObject[params.root].scale[2] * params.zoom
     )
   );
   modelMatrix = mat4.multiply(
@@ -201,6 +201,23 @@ export function drawLoop(gl, params, object) {
   if (object.sibling !== "") {
     drawLoop(gl, params, params.modelObject[object.sibling]);
   }
+}
+
+export function drawCanvas(gl, params, canvasNum){
+  resizeCanvasToDisplaySize(gl.canvas);
+  gl.clearDepth(1.0);
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+  gl.depthFunc(gl.LEQUAL);
+
+  gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
+
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  let retValue = {}
+  params.modelObject[params.root].draw(gl, params, retValue, canvasNum);
+
+  return retValue
 }
 
 export function createProgram(gl) {
