@@ -171,7 +171,7 @@ export function drawScene(gl, params) {
 }
 
 export function drawLoop(gl, params, object) {
-  console.log(object);
+  // console.log(object);
   drawGeometry(gl, params.program, object);
   // for (var i = 0; i < object.child.length; i++) {
   //   drawLoop(gl, params, params.modelObject[object.child[i]]);

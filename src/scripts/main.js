@@ -5,6 +5,7 @@ import mat4 from "./matrix.js";
 import Object from "./object.js";
 import { button, checkbox, radio, slider, value } from "./querySelector.js";
 import { createProgram, drawScene } from "./script.js";
+import { generateTree } from "./componentTree.js";
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
@@ -27,6 +28,7 @@ const main = () => {
     defaultModel[object.name] = newPart;
   }
   var root = model_penyu.root_name;
+  generateTree(defaultModel,root,treeClicked);
   window.onclick = function (event) {
     if (event.target == modal) {
       closeModal();
@@ -111,6 +113,7 @@ const main = () => {
         params.center = centerpoint(params.modelObject[data.root_name]);
         params.root = data.root_name;
         reset();
+        generateTree(params.modelObject,params.root);
       };
       reader.readAsText(file);
     };
@@ -294,6 +297,9 @@ const main = () => {
     y /= modelObject.vertices.length / 3;
     z /= modelObject.vertices.length / 3;
     return [x, y, z];
+  }
+  function treeClicked(event){
+    console.log(event.target.name)
   }
 };
 

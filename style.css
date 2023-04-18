@@ -30,7 +30,6 @@ body {
   }
 
 .toolbar {
-	width: 600px;
 	background-color: #333;
 	color: #fff;
 	display: flex;
@@ -108,3 +107,19 @@ body {
 	text-decoration: none;
 	cursor: pointer;
   }
+
+#component-tree {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start; /* Align the child elements to the start */
+  }
+
+#ui{
+	margin-top: 20px;
+	margin-left:30px;
+	margin-right:30px;
+}
+
+#uiContainer{
+	width: 100%;
+}
