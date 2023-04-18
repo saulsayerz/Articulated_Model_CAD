@@ -90,3 +90,9 @@ export var radio = {
   oblique_component_Radio : document.getElementById("oblique-component"),
 }
 
+export var select = {
+  // ARTICULATED
+  select_texture: document.querySelector("#texture-dropdown"),
+  select_component_texture: document.querySelector("#texture-component-dropdown"),
+};
+

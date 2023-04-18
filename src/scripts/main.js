@@ -4,9 +4,21 @@ import { closeModal, modal, openModal } from "./help.js";
 import { degToRad, radToDeg } from "./helper.js";
 import mat4 from "./matrix.js";
 import Object from "./object.js";
-import { button, checkbox, radio, slider, value } from "./querySelector.js";
+import {
+  button,
+  checkbox,
+  radio,
+  select,
+  slider,
+  value,
+} from "./querySelector.js";
 import { recPosition, recReset, recRotation, recScale } from "./recursive.js";
 import { createProgram, drawCanvas } from "./script.js";
+import {
+  createBumpTexture,
+  createTextureFromEnvironment,
+  createTextureFromImage,
+} from "./texture.js";
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
@@ -52,6 +64,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
+    texture: model_penyu.texture_mode,
   };
 
   var params2 = {
@@ -64,6 +77,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
+    texture: model_penyu.texture_mode,
   };
 
   var defParams = {
@@ -76,11 +90,13 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
+    texture: model_penyu.texture_mode,
   };
 
   // setup UI
   defaultSlider();
   defaultCheckbox();
+  defaultSelect();
   slider.slider_transX.oninput = updatePosition(0, 1);
   slider.slider_transY.oninput = updatePosition(1, 1);
   slider.slider_transZ.oninput = updatePosition(2, 1);
@@ -114,6 +130,9 @@ const main = () => {
 
   button.button_reset.onclick = resetState(1);
   button.button_component_reset.onclick = resetState(2);
+
+  select.select_texture.onchange = updateTexture(1);
+  select.select_component_texture.onchange = updateTexture(2);
 
   button.button_save.onclick = save();
   button.input_file.onchange = load();
@@ -349,14 +368,14 @@ const main = () => {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-      if (canvasNum === 1) {
+      if(canvasNum===1){
         params1.cameraAngleRadians = angleInRadians;
         value.value_camera.innerHTML = angleInDegrees;
       } else {
         params2.cameraAngleRadians = angleInRadians;
-        value.value_component_camera.innerHTML = angleInDegrees;
+        value.value_camera.innerHTML = angleInDegrees;
       }
-
+      
       modelViewMatrix = drawBothScene();
     };
   }
@@ -364,25 +383,35 @@ const main = () => {
   function updateCameraRadius(canvasNum) {
     return function (event) {
       if (canvasNum === 1) {
-        params1.cameraRadius = event.target.value;
-        value.value_cameraR.innerHTML = params1.cameraRadius;
+        params1.shading = event.target.checked;
       } else {
-        params2.cameraRadius = event.target.value;
-        value.value_component_cameraR.innerHTML = params2.cameraRadius;
+        params2.shading = event.target.checked;
       }
 
       modelViewMatrix = drawBothScene();
     };
   }
 
+  function updateTexture(canvasNum) {
+    return function (event) {
+      if(canvasNum===1){
+        params1.texture = event.target.value;
+      } else{
+        params2.texture = event.target.value;
+      }
+      
+      modelViewMatrix = drawBothScene();
+    };
+  }
+
   function updateShading(canvasNum) {
     return function (event) {
-      if (canvasNum === 1) {
+      if(canvasNum===1){
         params1.shading = event.target.checked;
       } else {
         params2.shading = event.target.checked;
       }
-
+      
       modelViewMatrix = drawBothScene();
     };
   }
@@ -452,19 +481,20 @@ const main = () => {
     }
   }
 
-  function defaultCheckbox(canvasNum) {
-    if (canvasNum === 1) {
-      checkbox.check_shading.checked = false;
-    } else {
-      checkbox.check_component_shading.checked = false;
-    }
+  function defaultCheckbox() {
+    checkbox.check_shading.checked = false;
   }
 
-  function resetTRS(canvasNum) {
-    if (canvasNum === 1) {
-      recReset(params1.modelObject, params1.root, true)
+  function defaultSelect() {
+    select.select_texture.value = defParams.texture;
+    select.select_component_texture.value = defParams.texture;
+  }
+
+  function resetTRS(canvasNum){
+    if(canvasNum===1){
+      recReset(params1.modelObject, params1.root, true);
     } else {
-      recReset(params2.modelObject, params2.root, true);
+      recReset(params2.modelObject, params2.root, false);
     }
   }
 
@@ -486,6 +516,7 @@ const main = () => {
       params1.shading = defParams.shading;
       params1.fudgeFactor = defParams.fudgeFactor;
       params1.projType = defParams.projType;
+      params1.texture = defParams.texture;
       radio.perspectiveRadio.checked = true;
       resetTRS(1);
       defaultSlider(1);
@@ -497,12 +528,14 @@ const main = () => {
       params2.shading = defParams.shading;
       params2.fudgeFactor = defParams.fudgeFactor;
       params2.projType = defParams.projType;
+      params2.texture = defParams.texture;
       radio.perspectiveRadio.checked = true;
       resetTRS(2);
       defaultSlider(2);
       defaultCheckbox(2);
     }
 
+    defaultSelect();
     modelViewMatrix = drawBothScene();
   }
 
@@ -520,6 +553,14 @@ const main = () => {
 
     return ret1;
   }
+
+  createTextureFromImage(gl, prog);
+  createTextureFromEnvironment(gl, prog);
+  createBumpTexture(gl, prog);
+
+  createTextureFromImage(gl2, prog2);
+  createTextureFromEnvironment(gl2, prog2);
+  createBumpTexture(gl2, prog2);
 };
 
 window.onload = main;

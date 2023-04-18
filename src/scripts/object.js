@@ -24,6 +24,19 @@ class Object {
     var normalLocation = gl.getUniformLocation(params.program, "u_normal");
     var shadingBool = gl.getUniformLocation(params.program, "u_shading");
     var fudgeLocation = gl.getUniformLocation(params.program, "u_fudgeFactor");
+    var uImage = gl.getUniformLocation(params.program, "u_image");
+    var uEnvironment = gl.getUniformLocation(params.program, "u_environment");
+    var uBump = gl.getUniformLocation(params.program, "u_bump");
+    var uDiffuseColorLocation = gl.getUniformLocation(params.program, "u_diffuseColor");
+    var textureMode = gl.getUniformLocation(params.program, "u_texture");  
+
+    gl.uniform1i(textureMode, parseInt(params.texture, 10));
+
+    gl.uniform1i(uImage, 1);
+    gl.uniform1i(uEnvironment, 2);
+    gl.uniform1i(uBump, 3);
+
+    gl.uniform3fv(uDiffuseColorLocation, [0, 1, 1]);
 
     var projMatrix = mat4.ortho(
       -gl.canvas.clientWidth / 2,
