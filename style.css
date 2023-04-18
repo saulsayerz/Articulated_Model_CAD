@@ -7,7 +7,7 @@ body {
 	font-family: sans-serif;
 }
 
-.canvas {
+.canvasContainer {
 	flex: 1;
 	display: flex;
 	justify-content: center;
@@ -21,7 +21,7 @@ body {
 }
 
 
-#myCanvas {
+.canvas {
 	width: 720px;
 	height: 720px;
 	display: block;

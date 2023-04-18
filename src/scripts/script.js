@@ -63,7 +63,8 @@ function resizeCanvasToDisplaySize(canvas) {
   }
 }
 
-export function drawScene(gl, params) {
+// Maksudnya loop tuh buat canvas total, kalau false berarti canvas component
+export function drawScene(gl, params, loop=true) {
   resizeCanvasToDisplaySize(gl.canvas);
   gl.clearDepth(1.0);
   gl.enable(gl.CULL_FACE);
@@ -74,14 +75,24 @@ export function drawScene(gl, params) {
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  gl.useProgram(params.program);
+  if (loop) {
+    gl.useProgram(params.program);
+    var modelLocation = gl.getUniformLocation(params.program, "u_modelMatrix");
+    var viewLocation = gl.getUniformLocation(params.program, "u_viewMatrix");
+    var projLocation = gl.getUniformLocation(params.program, "u_projMatrix");
+    var normalLocation = gl.getUniformLocation(params.program, "u_normal");
+    var shadingBool = gl.getUniformLocation(params.program, "u_shading");
+    var fudgeLocation = gl.getUniformLocation(params.program, "u_fudgeFactor");
+  } else{
+    gl.useProgram(params.program2);
+    var modelLocation = gl.getUniformLocation(params.program2, "u_modelMatrix");
+    var viewLocation = gl.getUniformLocation(params.program2, "u_viewMatrix");
+    var projLocation = gl.getUniformLocation(params.program2, "u_projMatrix");
+    var normalLocation = gl.getUniformLocation(params.program2, "u_normal");
+    var shadingBool = gl.getUniformLocation(params.program2, "u_shading");
+    var fudgeLocation = gl.getUniformLocation(params.program2, "u_fudgeFactor");
+  }
 
-  var modelLocation = gl.getUniformLocation(params.program, "u_modelMatrix");
-  var viewLocation = gl.getUniformLocation(params.program, "u_viewMatrix");
-  var projLocation = gl.getUniformLocation(params.program, "u_projMatrix");
-  var normalLocation = gl.getUniformLocation(params.program, "u_normal");
-  var shadingBool = gl.getUniformLocation(params.program, "u_shading");
-  var fudgeLocation = gl.getUniformLocation(params.program, "u_fudgeFactor");
   // var uSampler = gl.getUniformLocation(params.program, "u_sampler");
   // var uTexture = gl.getUniformLocation(params.program, "u_texture");
   // var textureMode1 = gl.getUniformLocation(params.program, "u_texture_mode");
@@ -165,7 +176,11 @@ export function drawScene(gl, params) {
   gl.uniformMatrix4fv(normalLocation, false, normalMatrix);
   gl.uniform1i(shadingBool, params.shading);
 
-  drawLoop(gl, params, params.modelObject[params.root]);
+  if (loop){
+    drawLoop(gl, params, params.modelObject[params.root]);
+  } else{
+    drawGeometry(gl, params.program2, params.modelObject[params.selectedObject]);
+  }
 
   return modelMatrix;
 }

@@ -1,4 +1,5 @@
 export var value = {
+  // ARTICULATED MODEL
   value_transX: document.querySelector("#value-x"),
   value_transY: document.querySelector("#value-y"),
   value_transZ: document.querySelector("#value-z"),
@@ -13,9 +14,26 @@ export var value = {
   value_cameraR: document.querySelector("#value-cameraR"),
   value_shading: document.querySelector("#value-shading"),
   value_fudgeFactor: document.querySelector("#value-fudgeFactor"),
+
+  // COMPONENT
+  value_component_transX: document.querySelector("#value-component-x"),
+  value_component_transY: document.querySelector("#value-component-y"),
+  value_component_transZ: document.querySelector("#value-component-z"),
+  value_component_angleX: document.querySelector("#value-component-angleX"),
+  value_component_angleY: document.querySelector("#value-component-angleY"),
+  value_component_angleZ: document.querySelector("#value-component-angleZ"),
+  value_component_scaleX: document.querySelector("#value-component-scaleX"),
+  value_component_scaleY: document.querySelector("#value-component-scaleY"),
+  value_component_scaleZ: document.querySelector("#value-component-scaleZ"),
+  value_component_zoom: document.querySelector("#value-component-zoom"),
+  value_component_camera: document.querySelector("#value-component-camera"),
+  value_component_cameraR: document.querySelector("#value-component-cameraR"),
+  value_component_shading: document.querySelector("#value-component-shading"),
+  value_component_fudgeFactor: document.querySelector("#value-component-fudgeFactor"),
 }
 
 export var slider = {
+  // ARTICULATED
   slider_transX: document.querySelector("#slider-x"),
   slider_transY: document.querySelector("#slider-y"),
   slider_transZ: document.querySelector("#slider-z"),
@@ -29,6 +47,21 @@ export var slider = {
   slider_camera: document.querySelector("#slider-camera"),
   slider_cameraR: document.querySelector("#slider-cameraR"),
   slider_fudgeFactor: document.querySelector("#slider-fudgeFactor"),
+
+  // COMPONENT
+  slider_component_transX: document.querySelector("#slider-component-x"),
+  slider_component_transY: document.querySelector("#slider-component-y"),
+  slider_component_transZ: document.querySelector("#slider-component-z"),
+  slider_component_angleX: document.querySelector("#slider-component-angleX"),
+  slider_component_angleY: document.querySelector("#slider-component-angleY"),
+  slider_component_angleZ: document.querySelector("#slider-component-angleZ"),
+  slider_component_scaleX: document.querySelector("#slider-component-scaleX"),
+  slider_component_scaleY: document.querySelector("#slider-component-scaleY"),
+  slider_component_scaleZ: document.querySelector("#slider-component-scaleZ"),
+  slider_component_zoom: document.querySelector("#slider-component-zoom"),
+  slider_component_camera: document.querySelector("#slider-component-camera"),
+  slider_component_cameraR: document.querySelector("#slider-component-cameraR"),
+  slider_component_fudgeFactor: document.querySelector("#slider-component-fudgeFactor"),
 }
 
 export var checkbox = {
@@ -43,6 +76,12 @@ export var button = {
 }
 
 export var radio = {
+  // ARTICULATED
+  orthogonalRadio : document.getElementById("orthogonal"),
+  perspectiveRadio : document.getElementById("perspective"),
+  obliqueRadio : document.getElementById("oblique"),
+
+  // COMPONENT
   orthogonalRadio : document.getElementById("orthogonal"),
   perspectiveRadio : document.getElementById("perspective"),
   obliqueRadio : document.getElementById("oblique"),

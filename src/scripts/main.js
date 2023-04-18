@@ -10,11 +10,17 @@ import { generateTree } from "./componentTree.js";
 const main = () => {
   /** @type {HTMLCanvasElement} */
   var canvas = document.querySelector("#myCanvas");
+  var canvas2 = document.querySelector("#myCanvas2");
   var gl = canvas.getContext("webgl");
   if (!gl) {
     return;
   }
+  var gl2 = canvas2.getContext("webgl");
+  if (!gl2) {
+    return;
+  }
   var prog = createProgram(gl);
+  var prog2 = createProgram(gl2);
   var defaultModel = {};
   for (let object of model_penyu.parts) {
     let newPart = new Object(
@@ -39,6 +45,7 @@ const main = () => {
     modelObject: defaultModel,
     root: root,
     program: prog,
+    program2: prog2,
     translation: [0, 0, 0],
     rotation: [degToRad(0), degToRad(0), degToRad(0)],
     scale: [1, 1, 1],
@@ -49,6 +56,7 @@ const main = () => {
     center: centerpoint(defaultModel[root]),
     fudgeFactor: 1,
     projType: "perspective",
+    selectedObject: root,
   };
 
   var defParams = {
@@ -90,7 +98,7 @@ const main = () => {
   radio.orthogonalRadio.onclick = updateProjection();
   radio.perspectiveRadio.onclick = updateProjection();
   radio.obliqueRadio.onclick = updateProjection();
-  var modelViewMatrix = drawScene(gl, params);
+  var modelViewMatrix = drawBothScene();
 
   function load() {
     return function (event) {
@@ -153,7 +161,7 @@ const main = () => {
       else if (index == 1)
         value.value_transY.innerHTML = params.translation[index];
       else value.value_transZ.innerHTML = params.translation[index];
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -165,7 +173,7 @@ const main = () => {
       if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
       else if (index == 1) value.value_angleY.innerHTML = angleInDegrees;
       else value.value_angleZ.innerHTML = angleInDegrees;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -175,7 +183,7 @@ const main = () => {
       if (index == 0) value.value_scaleX.innerHTML = params.scale[index];
       else if (index == 1) value.value_scaleY.innerHTML = params.scale[index];
       else value.value_scaleZ.innerHTML = params.scale[index];
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -183,7 +191,7 @@ const main = () => {
     return function (event) {
       params.fudgeFactor = event.target.value;
       value.value_fudgeFactor.innerHTML = params.fudgeFactor;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -191,14 +199,14 @@ const main = () => {
     return function (event) {
       params.zoom = event.target.value;
       value.value_zoom.innerHTML = params.zoom;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
   function updateProjection() {
     return function (event) {
       params.projType = event.target.value;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -208,7 +216,7 @@ const main = () => {
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
       params.cameraAngleRadians = angleInRadians;
       value.value_camera.innerHTML = angleInDegrees;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -216,14 +224,14 @@ const main = () => {
     return function (event) {
       params.cameraRadius = event.target.value;
       value.value_cameraR.innerHTML = params.cameraRadius;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
   function updateShading() {
     return function (event) {
       params.shading = event.target.checked;
-      modelViewMatrix = drawScene(gl, params);
+      modelViewMatrix = drawBothScene();
     };
   }
 
@@ -281,7 +289,7 @@ const main = () => {
     radio.perspectiveRadio.checked = true;
     defaultSlider();
     defaultCheckbox();
-    modelViewMatrix = drawScene(gl, params);
+    modelViewMatrix = drawBothScene();
   }
 
   function centerpoint(modelObject) {
@@ -298,8 +306,16 @@ const main = () => {
     z /= modelObject.vertices.length / 3;
     return [x, y, z];
   }
+
   function treeClicked(event){
     console.log(event.target.name)
+    params.selectedObject = event.target.name;
+    drawBothScene();
+  }
+
+  function drawBothScene(){
+    drawScene(gl, params);
+    drawScene(gl2, params,false);
   }
 };
 
