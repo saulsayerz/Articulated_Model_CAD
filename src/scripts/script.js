@@ -4,7 +4,7 @@ import mat4 from './matrix.js';
 function drawGeometry(gl,program,model){
     const positionsBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.positions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.vertices), gl.STATIC_DRAW);
 
     const colorsBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, colorsBuffer);
@@ -28,7 +28,7 @@ function drawGeometry(gl,program,model){
     gl.enableVertexAttribArray(normalAttributeLocation);
     gl.bindBuffer(gl.ARRAY_BUFFER, normalsBuffer);
     gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
-    gl.drawArrays(gl.TRIANGLES, 0, model.positions.length / 3);
+    gl.drawArrays(gl.TRIANGLES, 0, model.vertices.length / 3);
 }
 
 function createShader(gl, type, source) {
@@ -73,6 +73,11 @@ export function drawScene(gl, params) {
     var normalLocation = gl.getUniformLocation(params.program, "u_normal");
     var shadingBool = gl.getUniformLocation(params.program, "u_shading");
     var fudgeLocation = gl.getUniformLocation(params.program, "u_fudgeFactor");
+    // var uSampler = gl.getUniformLocation(params.program, "u_sampler");
+    // var uTexture = gl.getUniformLocation(params.program, "u_texture");
+    // var textureMode1 = gl.getUniformLocation(params.program, "u_texture_mode");
+    // var textureMode2 = gl.getUniformLocation(params.program, "u_texture_mode_2");
+    // var worldCamPos = gl.getUniformLocation(params.program, "u_worldCameraPosition");
 
     var projMatrix = mat4.ortho(-gl.canvas.clientWidth / 2, gl.canvas.clientWidth / 2, gl.canvas.clientHeight / 2, - gl.canvas.clientHeight / 2, 800, -800);
     if (params.projType == "perspective") {
@@ -123,9 +128,20 @@ export function drawScene(gl, params) {
     gl.uniformMatrix4fv(normalLocation, false, normalMatrix);
     gl.uniform1i(shadingBool, params.shading);
 
-    drawGeometry(gl, params.program, params.hollowObject);
+    drawLoop(gl, params, params.modelObject[params.root]);
 
     return modelMatrix;
+}
+
+export function drawLoop(gl, params, object) {
+    console.log(object);
+    drawGeometry(gl, params.program, object);
+    for (var i = 0; i < object.children.length; i++) {
+        drawLoop(gl, params, params.modelObject[object.children[i]]);
+    }
+    for (var i = 0; i < object.siblings.length; i++) {
+        drawLoop(gl, params, params.modelObject[object.siblings[i]]);
+    }
 }
 
 export function createProgram(gl) {
