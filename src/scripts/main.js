@@ -1,5 +1,6 @@
 import { model_penyu } from "../default_model/model_example.js";
 import { model_anjing } from "../default_model/model_anjing.js";
+import { model_bebek } from "../default_model/model_bebek.js";
 import { generateTree } from "./componentTree.js";
 import { closeModal, modal, openModal } from "./help.js";
 import { centerpoint, degToRad, radToDeg } from "./helper.js";
@@ -40,7 +41,7 @@ const main = () => {
   var prog = createProgram(gl);
   var prog2 = createProgram(gl2);
   var defaultModel = {};
-  for (let object of model_anjing.parts) {
+  for (let object of model_bebek.parts) {
     let newPart = new Object(
       object["name"],
       object["vertices"],
@@ -51,7 +52,7 @@ const main = () => {
     );
     defaultModel[object.name] = newPart;
   }
-  var root = model_anjing.root_name;
+  var root = model_bebek.root_name;
   generateTree(defaultModel, root, treeClicked);
   window.onclick = function (event) {
     if (event.target == modal) {
@@ -76,7 +77,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_anjing.texture_mode,
+    texture: model_bebek.texture_mode,
   };
 
   var params2 = {
@@ -90,7 +91,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_anjing.texture_mode,
+    texture: model_bebek.texture_mode,
   };
 
   var defParams = {
@@ -103,7 +104,7 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
-    texture: model_anjing.texture_mode,
+    texture: model_bebek.texture_mode,
   };
 
   // setup UI
