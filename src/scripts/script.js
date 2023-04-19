@@ -64,7 +64,7 @@ function resizeCanvasToDisplaySize(canvas) {
 }
 
 // Maksudnya loop tuh buat canvas total, kalau false berarti canvas component
-export function drawScene(gl, params, loop=true) {
+export function drawScene(gl, params, loop = true) {
   resizeCanvasToDisplaySize(gl.canvas);
   gl.clearDepth(1.0);
   gl.enable(gl.CULL_FACE);
@@ -86,9 +86,12 @@ export function drawScene(gl, params, loop=true) {
     var uImage = gl.getUniformLocation(params.program, "u_image");
     var uEnvironment = gl.getUniformLocation(params.program, "u_environment");
     var uBump = gl.getUniformLocation(params.program, "u_bump");
-    var uDiffuseColorLocation = gl.getUniformLocation(params.program, "u_diffuseColor");
-    var textureMode = gl.getUniformLocation(params.program, "u_texture");  
-  } else{
+    var uDiffuseColorLocation = gl.getUniformLocation(
+      params.program,
+      "u_diffuseColor"
+    );
+    var textureMode = gl.getUniformLocation(params.program, "u_texture");
+  } else {
     gl.useProgram(params.program2);
     var modelLocation = gl.getUniformLocation(params.program2, "u_modelMatrix");
     var viewLocation = gl.getUniformLocation(params.program2, "u_viewMatrix");
@@ -99,12 +102,15 @@ export function drawScene(gl, params, loop=true) {
     var uImage = gl.getUniformLocation(params.program2, "u_image");
     var uEnvironment = gl.getUniformLocation(params.program2, "u_environment");
     var uBump = gl.getUniformLocation(params.program2, "u_bump");
-    var uDiffuseColorLocation = gl.getUniformLocation(params.program2, "u_diffuseColor");
-    var textureMode = gl.getUniformLocation(params.program2, "u_texture");  
+    var uDiffuseColorLocation = gl.getUniformLocation(
+      params.program2,
+      "u_diffuseColor"
+    );
+    var textureMode = gl.getUniformLocation(params.program2, "u_texture");
   }
 
   // var worldCamPos = gl.getUniformLocation(params.program, "u_worldCameraPosition");
-  
+
   gl.uniform1i(textureMode, parseInt(params.texture, 10));
 
   gl.uniform1i(uImage, 1);
@@ -143,9 +149,18 @@ export function drawScene(gl, params, loop=true) {
     modelMatrix,
     mat4.translate(params.center[0], params.center[1], params.center[2])
   );
-  modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.modelObject[params.root].rotation[0]));
-  modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.modelObject[params.root].rotation[1]));
-  modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.modelObject[params.root].rotation[2]));
+  modelMatrix = mat4.multiply(
+    modelMatrix,
+    mat4.xRotate(params.modelObject[params.root].rotation[0])
+  );
+  modelMatrix = mat4.multiply(
+    modelMatrix,
+    mat4.yRotate(params.modelObject[params.root].rotation[1])
+  );
+  modelMatrix = mat4.multiply(
+    modelMatrix,
+    mat4.zRotate(params.modelObject[params.root].rotation[2])
+  );
   modelMatrix = mat4.multiply(
     modelMatrix,
     mat4.scale(
@@ -190,10 +205,14 @@ export function drawScene(gl, params, loop=true) {
   gl.uniformMatrix4fv(normalLocation, false, normalMatrix);
   gl.uniform1i(shadingBool, params.shading);
 
-  if (loop){
+  if (loop) {
     drawLoop(gl, params, params.modelObject[params.root]);
-  } else{
-    drawGeometry(gl, params.program2, params.modelObject[params.selectedObject]);
+  } else {
+    drawGeometry(
+      gl,
+      params.program2,
+      params.modelObject[params.selectedObject]
+    );
   }
 
   return modelMatrix;
@@ -217,7 +236,7 @@ export function drawLoop(gl, params, object) {
   }
 }
 
-export function drawCanvas(gl, params, canvasNum){
+export function drawCanvas(gl, params, canvasNum, isSubTree) {
   resizeCanvasToDisplaySize(gl.canvas);
   gl.clearDepth(1.0);
   gl.enable(gl.CULL_FACE);
@@ -228,10 +247,27 @@ export function drawCanvas(gl, params, canvasNum){
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  let retValue = {}
-  params.modelObject[params.root].draw(gl, params, retValue, canvasNum);
+  let retValue = {};
+  if(canvasNum===1){
+    params.modelObject[params.globalRoot].draw(
+      gl,
+      params,
+      retValue,
+      canvasNum,
+      isSubTree
+    );
+  } else{
+    params.modelObject[params.root].draw(
+      gl,
+      params,
+      retValue,
+      canvasNum,
+      isSubTree
+    );
+  }
+  
 
-  return retValue
+  return retValue;
 }
 
 export function createProgram(gl) {

@@ -54,8 +54,11 @@ const main = () => {
     }
   };
 
+  var isSubTree = true;
+
   var params1 = {
     modelObject: defaultModel,
+    globalRoot: root,
     root: root,
     program: prog,
     zoom: 1.0,
@@ -69,6 +72,7 @@ const main = () => {
 
   var params2 = {
     modelObject: defaultModel,
+    globalRoot: root,
     root: root,
     program: prog2,
     zoom: 1.0,
@@ -97,29 +101,29 @@ const main = () => {
   defaultSlider();
   defaultCheckbox();
   defaultSelect();
-  slider.slider_transX.oninput = updatePosition(0, 1);
-  slider.slider_transY.oninput = updatePosition(1, 1);
-  slider.slider_transZ.oninput = updatePosition(2, 1);
-  slider.slider_angleX.oninput = updateRotation(0, 1);
-  slider.slider_angleY.oninput = updateRotation(1, 1);
-  slider.slider_angleZ.oninput = updateRotation(2, 1);
-  slider.slider_scaleX.oninput = updateScale(0, 1);
-  slider.slider_scaleY.oninput = updateScale(1, 1);
-  slider.slider_scaleZ.oninput = updateScale(2, 1);
+  slider.slider_transX.oninput = updatePosition(0, false);
+  slider.slider_transY.oninput = updatePosition(1, false);
+  slider.slider_transZ.oninput = updatePosition(2, false);
+  slider.slider_angleX.oninput = updateRotation(0, false);
+  slider.slider_angleY.oninput = updateRotation(1, false);
+  slider.slider_angleZ.oninput = updateRotation(2, false);
+  slider.slider_scaleX.oninput = updateScale(0, false);
+  slider.slider_scaleY.oninput = updateScale(1, false);
+  slider.slider_scaleZ.oninput = updateScale(2, false);
   slider.slider_zoom.oninput = updateZoom(1);
   slider.slider_camera.oninput = updateCameraAngle(1);
   slider.slider_cameraR.oninput = updateCameraRadius(1);
   slider.slider_fudgeFactor.oninput = updateFudgeFactor(1);
 
-  slider.slider_component_transX.oninput = updatePosition(0, 2);
-  slider.slider_component_transY.oninput = updatePosition(1, 2);
-  slider.slider_component_transZ.oninput = updatePosition(2, 2);
-  slider.slider_component_angleX.oninput = updateRotation(0, 2);
-  slider.slider_component_angleY.oninput = updateRotation(1, 2);
-  slider.slider_component_angleZ.oninput = updateRotation(2, 2);
-  slider.slider_component_scaleX.oninput = updateScale(0, 2);
-  slider.slider_component_scaleY.oninput = updateScale(1, 2);
-  slider.slider_component_scaleZ.oninput = updateScale(2, 2);
+  slider.slider_component_transX.oninput = updatePosition(0, true);
+  slider.slider_component_transY.oninput = updatePosition(1, true);
+  slider.slider_component_transZ.oninput = updatePosition(2, true);
+  slider.slider_component_angleX.oninput = updateRotation(0, true);
+  slider.slider_component_angleY.oninput = updateRotation(1, true);
+  slider.slider_component_angleZ.oninput = updateRotation(2, true);
+  slider.slider_component_scaleX.oninput = updateScale(0, true);
+  slider.slider_component_scaleY.oninput = updateScale(1, true);
+  slider.slider_component_scaleZ.oninput = updateScale(2, true);
   slider.slider_component_zoom.oninput = updateZoom(2);
   slider.slider_component_camera.oninput = updateCameraAngle(2);
   slider.slider_component_cameraR.oninput = updateCameraRadius(2);
@@ -200,15 +204,15 @@ const main = () => {
     };
   }
 
-  function updatePosition(index, canvasNum) {
+  function updatePosition(index, subTree) {
     return function (event) {
-      if (canvasNum === 1) {
+      if (!subTree) {
         recPosition(
           index,
           event.target.value,
           params1.modelObject,
           params1.root,
-          true
+          false
         );
 
         if (index == 0)
@@ -226,7 +230,7 @@ const main = () => {
           event.target.value,
           params2.modelObject,
           params2.root,
-          false
+          true
         );
 
         if (index == 0)
@@ -239,22 +243,24 @@ const main = () => {
           value.value_component_transZ.innerHTML =
             params2.modelObject[params2.root].translation[index];
       }
+
+      isSubTree = subTree;
       modelViewMatrix = drawBothScene();
     };
   }
 
-  function updateRotation(index, canvasNum) {
+  function updateRotation(index, subTree) {
     return function (event) {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-      if (canvasNum === 1) {
+      if (!subTree) {
         recRotation(
           index,
           angleInRadians,
           params1.modelObject,
           params1.root,
-          true
+          false
         );
 
         if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
@@ -266,7 +272,7 @@ const main = () => {
           angleInRadians,
           params2.modelObject,
           params2.root,
-          false
+          true
         );
 
         if (index == 0) value.value_component_angleX.innerHTML = angleInDegrees;
@@ -275,19 +281,20 @@ const main = () => {
         else value.value_component_angleZ.innerHTML = angleInDegrees;
       }
 
+      isSubTree = subTree;
       modelViewMatrix = drawBothScene();
     };
   }
 
-  function updateScale(index, canvasNum) {
+  function updateScale(index, subTree) {
     return function (event) {
-      if (canvasNum === 1) {
+      if (!subTree) {
         recScale(
           index,
           event.target.value,
           params1.modelObject,
           params1.root,
-          true
+          false
         );
 
         if (index == 0)
@@ -305,7 +312,7 @@ const main = () => {
           event.target.value,
           params2.modelObject,
           params2.root,
-          false
+          true
         );
 
         if (index == 0)
@@ -319,6 +326,7 @@ const main = () => {
             params2.modelObject[params2.root].scale[index];
       }
 
+      isSubTree = subTree
       modelViewMatrix = drawBothScene();
     };
   }
@@ -368,14 +376,14 @@ const main = () => {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-      if(canvasNum===1){
+      if (canvasNum === 1) {
         params1.cameraAngleRadians = angleInRadians;
         value.value_camera.innerHTML = angleInDegrees;
       } else {
         params2.cameraAngleRadians = angleInRadians;
         value.value_camera.innerHTML = angleInDegrees;
       }
-      
+
       modelViewMatrix = drawBothScene();
     };
   }
@@ -383,9 +391,11 @@ const main = () => {
   function updateCameraRadius(canvasNum) {
     return function (event) {
       if (canvasNum === 1) {
-        params1.shading = event.target.checked;
+        params1.cameraRadius = event.target.value;
+        value.value_cameraR.innerHTML = params1.cameraRadius;
       } else {
-        params2.shading = event.target.checked;
+        params2.cameraRadius = event.target.value;
+        value.value_component_cameraR.innerHTML = params2.cameraRadius;
       }
 
       modelViewMatrix = drawBothScene();
@@ -394,24 +404,24 @@ const main = () => {
 
   function updateTexture(canvasNum) {
     return function (event) {
-      if(canvasNum===1){
+      if (canvasNum === 1) {
         params1.texture = event.target.value;
-      } else{
+      } else {
         params2.texture = event.target.value;
       }
-      
+
       modelViewMatrix = drawBothScene();
     };
   }
 
   function updateShading(canvasNum) {
     return function (event) {
-      if(canvasNum===1){
+      if (canvasNum === 1) {
         params1.shading = event.target.checked;
       } else {
         params2.shading = event.target.checked;
       }
-      
+
       modelViewMatrix = drawBothScene();
     };
   }
@@ -490,11 +500,11 @@ const main = () => {
     select.select_component_texture.value = defParams.texture;
   }
 
-  function resetTRS(canvasNum){
-    if(canvasNum===1){
-      recReset(params1.modelObject, params1.root, true);
+  function resetTRS(canvasNum) {
+    if (canvasNum === 1) {
+      recReset(params1.modelObject, params1.root, false);
     } else {
-      recReset(params2.modelObject, params2.root, false);
+      recReset(params2.modelObject, params2.root, true);
     }
   }
 
@@ -536,11 +546,13 @@ const main = () => {
     }
 
     defaultSelect();
+    isSubTree = true;
     modelViewMatrix = drawBothScene();
   }
 
   function treeClicked(event) {
     console.log(event.target.name);
+    params1.root = event.target.name;
     params2.root = event.target.name;
     drawBothScene();
   }
@@ -548,8 +560,8 @@ const main = () => {
   function drawBothScene() {
     // drawScene(gl, params1);
     // drawScene(gl2, params1,false);
-    const ret1 = drawCanvas(gl, params1, 1);
-    const ret2 = drawCanvas(gl2, params2, 2);
+    const ret1 = drawCanvas(gl, params1, 1, isSubTree);
+    const ret2 = drawCanvas(gl2, params2, 2, isSubTree);
 
     return ret1;
   }

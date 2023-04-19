@@ -9,14 +9,17 @@ class Object {
     this.normals = normals;
     this.child = child;
     this.sibling = sibling;
-    
+
     this.translation = [0, 0, 0];
     this.rotation = [degToRad(0), degToRad(0), degToRad(0)];
     this.scale = [1, 1, 1];
-    this.center = centerpoint(this)
+    this.center = centerpoint(this);
   }
 
-  draw(gl, params, retValue, canvasNum) {
+  draw(gl, params, retValue, canvasNum, isSubTree) {
+    if(canvasNum===1){
+      console.log(this.name)
+    }
     gl.useProgram(params.program);
     var modelLocation = gl.getUniformLocation(params.program, "u_modelMatrix");
     var viewLocation = gl.getUniformLocation(params.program, "u_viewMatrix");
@@ -27,8 +30,11 @@ class Object {
     var uImage = gl.getUniformLocation(params.program, "u_image");
     var uEnvironment = gl.getUniformLocation(params.program, "u_environment");
     var uBump = gl.getUniformLocation(params.program, "u_bump");
-    var uDiffuseColorLocation = gl.getUniformLocation(params.program, "u_diffuseColor");
-    var textureMode = gl.getUniformLocation(params.program, "u_texture");  
+    var uDiffuseColorLocation = gl.getUniformLocation(
+      params.program,
+      "u_diffuseColor"
+    );
+    var textureMode = gl.getUniformLocation(params.program, "u_texture");
 
     gl.uniform1i(textureMode, parseInt(params.texture, 10));
 
@@ -64,10 +70,16 @@ class Object {
       this.translation[1],
       this.translation[2]
     );
+
     modelMatrix = mat4.multiply(
       modelMatrix,
-      mat4.translate(this.center[0], this.center[1], this.center[2])
+      mat4.translate(
+        params.modelObject[params.root].center[0],
+        params.modelObject[params.root].center[1],
+        params.modelObject[params.root].center[2]
+      )
     );
+
     modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(this.rotation[0]));
     modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(this.rotation[1]));
     modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(this.rotation[2]));
@@ -79,9 +91,14 @@ class Object {
         this.scale[2] * params.zoom
       )
     );
+
     modelMatrix = mat4.multiply(
       modelMatrix,
-      mat4.translate(-this.center[0], -this.center[1], -this.center[2])
+      mat4.translate(
+        -params.modelObject[params.root].center[0],
+        -params.modelObject[params.root].center[1],
+        -params.modelObject[params.root].center[2]
+      )
     );
 
     var eye = [0, 0, params.cameraRadius];
@@ -164,14 +181,20 @@ class Object {
     gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, this.vertices.length / 3);
 
-    retValue[this.name] = modelMatrix
+    retValue[this.name] = modelMatrix;
 
     if (this.child !== "") {
-      params.modelObject[this.child].draw(gl, params, retValue, canvasNum);
+      params.modelObject[this.child].draw(gl, params, retValue, 1, isSubTree);
     }
 
     if (this.sibling !== "" && canvasNum == 1) {
-      params.modelObject[this.sibling].draw(gl, params, retValue, canvasNum);
+      params.modelObject[this.sibling].draw(
+        gl,
+        params,
+        retValue,
+        canvasNum,
+        isSubTree
+      );
     }
   }
 
