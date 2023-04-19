@@ -5,6 +5,7 @@ export function generateTree(parts,root, onClickCallback) {
     // Mulai dari root
     dfs(parts, root , visited, 0, results);
     const componentTree = document.getElementById("component-tree");
+    componentTree.innerHTML = "";
     for (let i = 0; i < results.length; i++) {
       const button = document.createElement("button");
       button.innerHTML = results[i][0];
