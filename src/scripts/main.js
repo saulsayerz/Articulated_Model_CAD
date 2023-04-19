@@ -16,10 +16,8 @@ import {
 import { recPosition, recReset, recRotation, recScale } from "./recursive.js";
 import { createProgram, drawCanvas } from "./script.js";
 import {
-  createBumpTexture,
-  createTextureFromEnvironment,
-  createTextureFromImage,
-  createBumpNormalTexture,
+  loadTextureCube,
+  loadTexture2D,
 } from "./texture.js";
 
 const main = () => {
@@ -213,13 +211,13 @@ const main = () => {
 
   function updatePosition(index, subTree) {
     return function (event) {
-      if (!subTree) {
+      if (subTree) {
         recPosition(
           index,
           event.target.value,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0)
@@ -235,9 +233,9 @@ const main = () => {
         recPosition(
           index,
           event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0)
@@ -261,13 +259,13 @@ const main = () => {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-      if (!subTree) {
+      if (subTree) {
         recRotation(
           index,
           angleInRadians,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
@@ -277,9 +275,9 @@ const main = () => {
         recRotation(
           index,
           angleInRadians,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0) value.value_component_angleX.innerHTML = angleInDegrees;
@@ -295,13 +293,13 @@ const main = () => {
 
   function updateScale(index, subTree) {
     return function (event) {
-      if (!subTree) {
+      if (subTree) {
         recScale(
           index,
           event.target.value,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0)
@@ -317,19 +315,19 @@ const main = () => {
         recScale(
           index,
           event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0)
-          value.value_scaleX.innerHTML =
+          value.value_component_scaleX.innerHTML =
             params2.modelObject[params2.root].scale[index];
         else if (index == 1)
-          value.value_scaleY.innerHTML =
+          value.value_component_scaleY.innerHTML =
             params2.modelObject[params2.root].scale[index];
         else
-          value.value_scaleZ.innerHTML =
+          value.value_component_scaleZ.innerHTML =
             params2.modelObject[params2.root].scale[index];
       }
 
@@ -573,15 +571,15 @@ const main = () => {
     return ret1;
   }
 
-  createTextureFromImage(gl, prog);
-  createTextureFromEnvironment(gl, prog);
-  createBumpTexture(gl, prog);
-  createBumpNormalTexture(gl, prog);
+  loadTexture2D(gl, prog, 'assets/custom/custom.jpg', 1)
+  loadTextureCube(gl, prog);
+  loadTexture2D(gl, prog, 'assets/bump/toy_box_normal.png', 3)
+  loadTexture2D(gl, prog, 'assets/bump/woodtiles.jpg', 4)
 
-  createTextureFromImage(gl2, prog2);
-  createTextureFromEnvironment(gl2, prog2);
-  createBumpTexture(gl2, prog2);
-  createBumpNormalTexture(gl2, prog2);
+  loadTexture2D(gl2, prog2, 'assets/custom/custom.jpg', 1)
+  loadTextureCube(gl2, prog2);
+  loadTexture2D(gl2, prog2, 'assets/bump/toy_box_normal.png', 3)
+  loadTexture2D(gl2, prog2, 'assets/bump/woodtiles.jpg', 4)
 };
 
 window.onload = main;
