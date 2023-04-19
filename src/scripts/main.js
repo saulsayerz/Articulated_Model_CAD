@@ -101,29 +101,29 @@ const main = () => {
   defaultSlider();
   defaultCheckbox();
   defaultSelect();
-  slider.slider_transX.oninput = updatePosition(0, false);
-  slider.slider_transY.oninput = updatePosition(1, false);
-  slider.slider_transZ.oninput = updatePosition(2, false);
-  slider.slider_angleX.oninput = updateRotation(0, false);
-  slider.slider_angleY.oninput = updateRotation(1, false);
-  slider.slider_angleZ.oninput = updateRotation(2, false);
-  slider.slider_scaleX.oninput = updateScale(0, false);
-  slider.slider_scaleY.oninput = updateScale(1, false);
-  slider.slider_scaleZ.oninput = updateScale(2, false);
+  slider.slider_transX.oninput = updatePosition(0, true);
+  slider.slider_transY.oninput = updatePosition(1, true);
+  slider.slider_transZ.oninput = updatePosition(2, true);
+  slider.slider_angleX.oninput = updateRotation(0, true);
+  slider.slider_angleY.oninput = updateRotation(1, true);
+  slider.slider_angleZ.oninput = updateRotation(2, true);
+  slider.slider_scaleX.oninput = updateScale(0, true);
+  slider.slider_scaleY.oninput = updateScale(1, true);
+  slider.slider_scaleZ.oninput = updateScale(2, true);
   slider.slider_zoom.oninput = updateZoom(1);
   slider.slider_camera.oninput = updateCameraAngle(1);
   slider.slider_cameraR.oninput = updateCameraRadius(1);
   slider.slider_fudgeFactor.oninput = updateFudgeFactor(1);
 
-  slider.slider_component_transX.oninput = updatePosition(0, true);
-  slider.slider_component_transY.oninput = updatePosition(1, true);
-  slider.slider_component_transZ.oninput = updatePosition(2, true);
-  slider.slider_component_angleX.oninput = updateRotation(0, true);
-  slider.slider_component_angleY.oninput = updateRotation(1, true);
-  slider.slider_component_angleZ.oninput = updateRotation(2, true);
-  slider.slider_component_scaleX.oninput = updateScale(0, true);
-  slider.slider_component_scaleY.oninput = updateScale(1, true);
-  slider.slider_component_scaleZ.oninput = updateScale(2, true);
+  slider.slider_component_transX.oninput = updatePosition(0, false);
+  slider.slider_component_transY.oninput = updatePosition(1, false);
+  slider.slider_component_transZ.oninput = updatePosition(2, false);
+  slider.slider_component_angleX.oninput = updateRotation(0, false);
+  slider.slider_component_angleY.oninput = updateRotation(1, false);
+  slider.slider_component_angleZ.oninput = updateRotation(2, false);
+  slider.slider_component_scaleX.oninput = updateScale(0, false);
+  slider.slider_component_scaleY.oninput = updateScale(1, false);
+  slider.slider_component_scaleZ.oninput = updateScale(2, false);
   slider.slider_component_zoom.oninput = updateZoom(2);
   slider.slider_component_camera.oninput = updateCameraAngle(2);
   slider.slider_component_cameraR.oninput = updateCameraRadius(2);
@@ -502,9 +502,9 @@ const main = () => {
 
   function resetTRS(canvasNum) {
     if (canvasNum === 1) {
-      recReset(params1.modelObject, params1.root, false);
+      recReset(params1.modelObject, params1.root, true);
     } else {
-      recReset(params2.modelObject, params2.root, true);
+      recReset(params2.modelObject, params2.root, false);
     }
   }
 
