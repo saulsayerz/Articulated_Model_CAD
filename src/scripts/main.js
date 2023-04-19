@@ -2,7 +2,7 @@ import { model_penyu } from "../default_model/model_example.js";
 import { model_anjing } from "../default_model/model_anjing.js";
 import { generateTree } from "./componentTree.js";
 import { closeModal, modal, openModal } from "./help.js";
-import { degToRad, radToDeg } from "./helper.js";
+import { centerpoint, degToRad, radToDeg } from "./helper.js";
 import mat4 from "./matrix.js";
 import Object from "./object.js";
 import {
@@ -65,6 +65,10 @@ const main = () => {
     modelObject: defaultModel,
     globalRoot: root,
     root: root,
+    translation: [0, 0, 0],
+    rotation: [degToRad(0), degToRad(0), degToRad(0)],
+    scale: [1,1,1],
+    center: centerpoint(defaultModel[root]),
     program: prog,
     zoom: 1.0,
     cameraAngleRadians: degToRad(0),
@@ -212,13 +216,7 @@ const main = () => {
   function updatePosition(index, subTree) {
     return function (event) {
       if (subTree) {
-        recPosition(
-          index,
-          event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
-        );
+        params1.translation[index] = event.target.value;
 
         if (index == 0)
           value.value_transX.innerHTML =
@@ -260,13 +258,7 @@ const main = () => {
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
       if (subTree) {
-        recRotation(
-          index,
-          angleInRadians,
-          params2.modelObject,
-          params2.root,
-          true
-        );
+        params1.rotation[index] = angleInRadians;
 
         if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
         else if (index == 1) value.value_angleY.innerHTML = angleInDegrees;
@@ -294,13 +286,7 @@ const main = () => {
   function updateScale(index, subTree) {
     return function (event) {
       if (subTree) {
-        recScale(
-          index,
-          event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
-        );
+        params1.scale[index] = event.target.value;
 
         if (index == 0)
           value.value_scaleX.innerHTML =
@@ -507,9 +493,12 @@ const main = () => {
 
   function resetTRS(canvasNum) {
     if (canvasNum === 1) {
-      recReset(params1.modelObject, params1.root, true);
+      // recReset(params1.modelObject, params1.root, true);
+      params1.translation= [0, 0, 0];
+      params1.rotation= [degToRad(0), degToRad(0), degToRad(0)];
+      params1.scale= [1,1,1];
     } else {
-      recReset(params2.modelObject, params2.root, false);
+      recReset(params2.modelObject, params2.root, true);
     }
   }
 
