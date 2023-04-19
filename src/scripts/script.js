@@ -86,11 +86,11 @@ export function drawScene(gl, params, loop = true) {
     var uImage = gl.getUniformLocation(params.program, "u_image");
     var uEnvironment = gl.getUniformLocation(params.program, "u_environment");
     var uBump = gl.getUniformLocation(params.program, "u_bump");
-    var uDiffuseColorLocation = gl.getUniformLocation(
-      params.program,
-      "u_diffuseColor"
-    );
-    var textureMode = gl.getUniformLocation(params.program, "u_texture");
+    var uDiffuseColorLocation = gl.getUniformLocation(params.program, "u_diffuseColor");
+    var textureMode = gl.getUniformLocation(params.program, "u_texture");  
+    var lightPosition = gl.getUniformLocation(params.program, "u_light_pos");
+    var heightScale = gl.getUniformLocation(params.program, "u_height_scale");
+    var uViewPos = gl.getUniformLocation(params.program, "u_view_pos");
   } else {
     gl.useProgram(params.program2);
     var modelLocation = gl.getUniformLocation(params.program2, "u_modelMatrix");
@@ -102,22 +102,23 @@ export function drawScene(gl, params, loop = true) {
     var uImage = gl.getUniformLocation(params.program2, "u_image");
     var uEnvironment = gl.getUniformLocation(params.program2, "u_environment");
     var uBump = gl.getUniformLocation(params.program2, "u_bump");
-    var uDiffuseColorLocation = gl.getUniformLocation(
-      params.program2,
-      "u_diffuseColor"
-    );
-    var textureMode = gl.getUniformLocation(params.program2, "u_texture");
+    var uDiffuseColorLocation = gl.getUniformLocation(params.program2, "u_diffuseColor");
+    var textureMode = gl.getUniformLocation(params.program2, "u_texture");  
+    var lightPosition = gl.getUniformLocation(params.program2, "u_light_pos");
+    var heightScale = gl.getUniformLocation(params.program2, "u_height_scale");
+    var uViewPos = gl.getUniformLocation(params.program2, "u_view_pos");
   }
 
-  // var worldCamPos = gl.getUniformLocation(params.program, "u_worldCameraPosition");
-
   gl.uniform1i(textureMode, parseInt(params.texture, 10));
+
+  gl.uniform3fv(lightPosition, [0.0, 5.0, 5.0])
 
   gl.uniform1i(uImage, 1);
   gl.uniform1i(uEnvironment, 2);
   gl.uniform1i(uBump, 3);
+  gl.uniform1i(uDiffuseColorLocation, 4);
 
-  gl.uniform3fv(uDiffuseColorLocation, [0, 1, 1]);
+  gl.uniform1f(heightScale, 50);
 
   var projMatrix = mat4.ortho(
     -gl.canvas.clientWidth / 2,
@@ -204,6 +205,7 @@ export function drawScene(gl, params, loop = true) {
   gl.uniformMatrix4fv(modelLocation, false, modelMatrix);
   gl.uniformMatrix4fv(normalLocation, false, normalMatrix);
   gl.uniform1i(shadingBool, params.shading);
+  gl.uniform3fv(uViewPos, camPos);
 
   if (loop) {
     drawLoop(gl, params, params.modelObject[params.root]);

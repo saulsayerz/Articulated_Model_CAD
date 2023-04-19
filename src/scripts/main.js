@@ -18,17 +18,23 @@ import {
   createBumpTexture,
   createTextureFromEnvironment,
   createTextureFromImage,
+  createBumpNormalTexture,
 } from "./texture.js";
 
 const main = () => {
   /** @type {HTMLCanvasElement} */
   var canvas = document.querySelector("#myCanvas");
   var canvas2 = document.querySelector("#myCanvas2");
-  var gl = canvas.getContext("webgl");
+  
+  var gl = canvas.getContext("experimental-webgl");
+  gl.getExtension('OES_standard_derivatives');
+
   if (!gl) {
     return;
   }
-  var gl2 = canvas2.getContext("webgl");
+  var gl2 = canvas2.getContext("experimental-webgl");
+  gl2.getExtension('OES_standard_derivatives');
+
   if (!gl2) {
     return;
   }
@@ -569,10 +575,12 @@ const main = () => {
   createTextureFromImage(gl, prog);
   createTextureFromEnvironment(gl, prog);
   createBumpTexture(gl, prog);
+  createBumpNormalTexture(gl, prog);
 
   createTextureFromImage(gl2, prog2);
   createTextureFromEnvironment(gl2, prog2);
   createBumpTexture(gl2, prog2);
+  createBumpNormalTexture(gl2, prog2);
 };
 
 window.onload = main;
