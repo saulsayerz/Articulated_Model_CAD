@@ -16,7 +16,10 @@ class Object {
     this.center = centerpoint(this);
   }
 
-  draw(gl, params, retValue, canvasNum, sibling = false) {
+  draw(gl, params, retValue, canvasNum, isSubTree) {
+    if(canvasNum===1){
+      console.log(this.name)
+    }
     gl.useProgram(params.program);
     var modelLocation = gl.getUniformLocation(params.program, "u_modelMatrix");
     var viewLocation = gl.getUniformLocation(params.program, "u_viewMatrix");
@@ -65,88 +68,41 @@ class Object {
       );
     }
 
-    var modelMatrix;
+    var modelMatrix = mat4.translate(
+      this.translation[0],
+      this.translation[1],
+      this.translation[2]
+    );
 
-    if(canvasNum===1){
-      modelMatrix = mat4.translate(
-        params.translation[0],
-        params.translation[1],
-        params.translation[2]
-      );
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.translate(
+        params.modelObject[params.root].center[0],
+        params.modelObject[params.root].center[1],
+        params.modelObject[params.root].center[2]
+      )
+    );
 
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          params.center[0],
-          params.center[1],
-          params.center[2]
-        )
-      );
+    modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(this.rotation[0]));
+    modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(this.rotation[1]));
+    modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(this.rotation[2]));
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.scale(
+        this.scale[0] * params.zoom,
+        this.scale[1] * params.zoom,
+        this.scale[2] * params.zoom
+      )
+    );
 
-      modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.rotation[0] + this.rotation[0]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.rotation[1] + this.rotation[1]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.rotation[2] + this.rotation[2]));
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.scale(
-          (params.scale[0] * this.scale[0]) * params.zoom,
-          (params.scale[1] * this.scale[1]) * params.zoom,
-          (params.scale[2] * this.scale[2]) * params.zoom
-        )
-      );
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          this.translation[0],
-          this.translation[1],
-          this.translation[2]
-        )
-      );
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(-params.center[0], -params.center[1], -params.center[2])
-      );
-    } else{
-      modelMatrix = mat4.translate(
-        this.translation[0],
-        this.translation[1],
-        this.translation[2]
-      );
-      
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          this.center[0],
-          this.center[1],
-          this.center[2]
-        )
-      );
-
-      modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(this.rotation[0]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(this.rotation[1]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(this.rotation[2]));
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.scale(
-          this.scale[0] * params.zoom,
-          this.scale[1] * params.zoom,
-          this.scale[2] * params.zoom
-        )
-      );
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          -this.center[0],
-          -this.center[1],
-          -this.center[2]
-        )
-      );
-    }
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.translate(
+        -params.modelObject[params.root].center[0],
+        -params.modelObject[params.root].center[1],
+        -params.modelObject[params.root].center[2]
+      )
+    );
 
     var eye = [0, 0, params.cameraRadius];
     var target = [0, 0, 0];
@@ -231,17 +187,17 @@ class Object {
 
     retValue[this.name] = modelMatrix;
 
-    if (this.child !== "" && canvasNum!==2) {
-      params.modelObject[this.child].draw(gl, params, retValue, canvasNum, true);
+    if (this.child !== "") {
+      params.modelObject[this.child].draw(gl, params, retValue, 1, isSubTree);
     }
 
-    if (this.sibling !== "" && sibling && canvasNum !== 2) {
+    if (this.sibling !== "" && canvasNum == 1) {
       params.modelObject[this.sibling].draw(
         gl,
         params,
         retValue,
         canvasNum,
-        true
+        isSubTree
       );
     }
   }

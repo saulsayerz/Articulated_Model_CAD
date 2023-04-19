@@ -1,28 +1,3 @@
-export function drawCanvas(gl, params, canvasNum) {
-  resizeCanvasToDisplaySize(gl.canvas);
-  gl.clearDepth(1.0);
-  gl.enable(gl.CULL_FACE);
-  gl.enable(gl.DEPTH_TEST);
-  gl.depthFunc(gl.LEQUAL);
-
-  gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
-
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-  let retValue = {};
-
-  if (canvasNum === 1) {
-    // drawGlobal(gl, params, retValue);
-    params.modelObject[params.globalRoot].draw(gl, params, retValue, 1);
-  } else {
-    params.modelObject[params.root].draw(gl, params, retValue, 2);
-  }
-
-  return retValue;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-
 function createShader(gl, type, source) {
   var shader = gl.createShader(type);
   gl.shaderSource(shader, source);
@@ -41,6 +16,39 @@ function resizeCanvasToDisplaySize(canvas) {
     canvas.width = displayWidth;
     canvas.height = displayHeight;
   }
+}
+
+export function drawCanvas(gl, params, canvasNum, isSubTree) {
+  resizeCanvasToDisplaySize(gl.canvas);
+  gl.clearDepth(1.0);
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+  gl.depthFunc(gl.LEQUAL);
+
+  gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
+
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  let retValue = {};
+  if (canvasNum === 1) {
+    params.modelObject[params.globalRoot].draw(
+      gl,
+      params,
+      retValue,
+      canvasNum,
+      isSubTree
+    );
+  } else {
+    params.modelObject[params.root].draw(
+      gl,
+      params,
+      retValue,
+      canvasNum,
+      isSubTree
+    );
+  }
+
+  return retValue;
 }
 
 export function createProgram(gl) {
