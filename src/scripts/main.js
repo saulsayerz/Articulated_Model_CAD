@@ -211,13 +211,13 @@ const main = () => {
 
   function updatePosition(index, subTree) {
     return function (event) {
-      if (!subTree) {
+      if (subTree) {
         recPosition(
           index,
           event.target.value,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0)
@@ -233,9 +233,9 @@ const main = () => {
         recPosition(
           index,
           event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0)
@@ -259,13 +259,13 @@ const main = () => {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-      if (!subTree) {
+      if (subTree) {
         recRotation(
           index,
           angleInRadians,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0) value.value_angleX.innerHTML = angleInDegrees;
@@ -275,9 +275,9 @@ const main = () => {
         recRotation(
           index,
           angleInRadians,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0) value.value_component_angleX.innerHTML = angleInDegrees;
@@ -293,13 +293,13 @@ const main = () => {
 
   function updateScale(index, subTree) {
     return function (event) {
-      if (!subTree) {
+      if (subTree) {
         recScale(
           index,
           event.target.value,
-          params1.modelObject,
-          params1.root,
-          false
+          params2.modelObject,
+          params2.root,
+          true
         );
 
         if (index == 0)
@@ -315,19 +315,19 @@ const main = () => {
         recScale(
           index,
           event.target.value,
-          params2.modelObject,
-          params2.root,
-          true
+          params1.modelObject,
+          params1.root,
+          false
         );
 
         if (index == 0)
-          value.value_scaleX.innerHTML =
+          value.value_component_scaleX.innerHTML =
             params2.modelObject[params2.root].scale[index];
         else if (index == 1)
-          value.value_scaleY.innerHTML =
+          value.value_component_scaleY.innerHTML =
             params2.modelObject[params2.root].scale[index];
         else
-          value.value_scaleZ.innerHTML =
+          value.value_component_scaleZ.innerHTML =
             params2.modelObject[params2.root].scale[index];
       }
 
