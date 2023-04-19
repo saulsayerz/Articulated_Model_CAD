@@ -16,10 +16,8 @@ import {
 import { recPosition, recReset, recRotation, recScale } from "./recursive.js";
 import { createProgram, drawCanvas } from "./script.js";
 import {
-  createBumpTexture,
-  createTextureFromEnvironment,
-  createTextureFromImage,
-  createBumpNormalTexture,
+  loadTextureCube,
+  loadTexture2D,
 } from "./texture.js";
 
 const main = () => {
@@ -573,15 +571,15 @@ const main = () => {
     return ret1;
   }
 
-  createTextureFromImage(gl, prog);
-  createTextureFromEnvironment(gl, prog);
-  createBumpTexture(gl, prog);
-  createBumpNormalTexture(gl, prog);
+  loadTexture2D(gl, prog, 'assets/custom/custom.jpg', 1)
+  loadTextureCube(gl, prog);
+  loadTexture2D(gl, prog, 'assets/bump/toy_box_normal.png', 3)
+  loadTexture2D(gl, prog, 'assets/bump/woodtiles.jpg', 4)
 
-  createTextureFromImage(gl2, prog2);
-  createTextureFromEnvironment(gl2, prog2);
-  createBumpTexture(gl2, prog2);
-  createBumpNormalTexture(gl2, prog2);
+  loadTexture2D(gl2, prog2, 'assets/custom/custom.jpg', 1)
+  loadTextureCube(gl2, prog2);
+  loadTexture2D(gl2, prog2, 'assets/bump/toy_box_normal.png', 3)
+  loadTexture2D(gl2, prog2, 'assets/bump/woodtiles.jpg', 4)
 };
 
 window.onload = main;

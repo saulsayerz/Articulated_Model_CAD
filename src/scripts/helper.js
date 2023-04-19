@@ -20,7 +20,3 @@ export function centerpoint(modelObject) {
   z /= modelObject.vertices.length / 3;
   return [x, y, z];
 }
-
-export function isPowerOf2(value) {
-  return (value & (value - 1)) === 0;
-}
