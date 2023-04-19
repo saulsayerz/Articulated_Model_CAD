@@ -65,13 +65,16 @@ class Object {
       );
     }
 
-    var modelMatrix;
+    var modelMatrix = mat4.identity();
 
     if(canvasNum===1){
-      modelMatrix = mat4.translate(
-        params.translation[0],
-        params.translation[1],
-        params.translation[2]
+      modelMatrix = mat4.multiply(
+        modelMatrix,
+        mat4.translate(
+          params.translation[0],
+          params.translation[1],
+          params.translation[2]
+        )
       );
 
       modelMatrix = mat4.multiply(
@@ -83,25 +86,16 @@ class Object {
         )
       );
 
-      modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.rotation[0] + this.rotation[0]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.rotation[1] + this.rotation[1]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.rotation[2] + this.rotation[2]));
+      modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(params.rotation[0]));
+      modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(params.rotation[1]));
+      modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(params.rotation[2]));
 
       modelMatrix = mat4.multiply(
         modelMatrix,
         mat4.scale(
-          (params.scale[0] * this.scale[0]) * params.zoom,
-          (params.scale[1] * this.scale[1]) * params.zoom,
-          (params.scale[2] * this.scale[2]) * params.zoom
-        )
-      );
-
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          this.translation[0],
-          this.translation[1],
-          this.translation[2]
+          params.scale[0],
+          params.scale[1],
+          params.scale[2]
         )
       );
 
@@ -109,44 +103,45 @@ class Object {
         modelMatrix,
         mat4.translate(-params.center[0], -params.center[1], -params.center[2])
       );
-    } else{
-      modelMatrix = mat4.translate(
+    } 
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.translate(
         this.translation[0],
         this.translation[1],
         this.translation[2]
-      );
-      
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          this.center[0],
-          this.center[1],
-          this.center[2]
-        )
-      );
+      )
+    );
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.translate(
+        this.center[0],
+        this.center[1],
+        this.center[2]
+      )
+    );
 
-      modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(this.rotation[0]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(this.rotation[1]));
-      modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(this.rotation[2]));
+    modelMatrix = mat4.multiply(modelMatrix, mat4.xRotate(this.rotation[0]));
+    modelMatrix = mat4.multiply(modelMatrix, mat4.yRotate(this.rotation[1]));
+    modelMatrix = mat4.multiply(modelMatrix, mat4.zRotate(this.rotation[2]));
 
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.scale(
-          this.scale[0] * params.zoom,
-          this.scale[1] * params.zoom,
-          this.scale[2] * params.zoom
-        )
-      );
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.scale(
+        this.scale[0] * params.zoom,
+        this.scale[1] * params.zoom,
+        this.scale[2] * params.zoom
+      )
+    );
 
-      modelMatrix = mat4.multiply(
-        modelMatrix,
-        mat4.translate(
-          -this.center[0],
-          -this.center[1],
-          -this.center[2]
-        )
-      );
-    }
+    modelMatrix = mat4.multiply(
+      modelMatrix,
+      mat4.translate(
+        -this.center[0],
+        -this.center[1],
+        -this.center[2]
+      )
+    );
 
     var eye = [0, 0, params.cameraRadius];
     var target = [0, 0, 0];
