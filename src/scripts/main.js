@@ -439,13 +439,12 @@ const main = () => {
     return function (event) {
       var angleInDegrees = event.target.value;
       var angleInRadians = (angleInDegrees * Math.PI) / 180;
-
       if (canvasNum === 1) {
         params1.cameraAngleRadians = angleInRadians;
         value.value_camera.innerHTML = angleInDegrees;
       } else {
         params2.cameraAngleRadians = angleInRadians;
-        value.value_camera.innerHTML = angleInDegrees;
+        value.value_component_camera.innerHTML = angleInDegrees;
       }
 
       modelViewMatrix = drawBothScene();
