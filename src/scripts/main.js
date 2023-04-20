@@ -109,8 +109,7 @@ const main = () => {
   };
 
   // setup UI
-  const selectedPart = document.getElementById("selectedPart");
-  selectedPart.innerHTML = "Selected Part: " + params1.root;
+  document.getElementById("selectedPart").innerHTML = "Selected Part: " + params1.root;
 
   defaultSlider(1);
   defaultSlider(2);
