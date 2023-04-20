@@ -11,7 +11,6 @@ Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kan
 - Fitur Transformasi (Translasi, Rotasi, Scale)
 - Fitur Camera (Rotation / Radius)
 - Fitur Shading
-- Fitur Zoom
 - Help
 
 ## Fitur Bonus

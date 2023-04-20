@@ -76,7 +76,6 @@ const main = () => {
     scale: [1,1,1],
     center: centerpoint(defaultModel[root]),
     program: prog,
-    zoom: 1.0,
     cameraAngleRadians: degToRad(0),
     cameraRadius: 200.0,
     shading: false,
@@ -90,7 +89,6 @@ const main = () => {
     globalRoot: root,
     root: root,
     program: prog2,
-    zoom: 1.0,
     cameraAngleRadians: degToRad(0),
     cameraRadius: 200.0,
     shading: false,
@@ -103,7 +101,6 @@ const main = () => {
     translation: [0, 0, 0],
     rotation: [degToRad(0), degToRad(0), degToRad(0)],
     scale: [1, 1, 1],
-    zoom: 1.0,
     cameraAngleRadians: degToRad(0),
     cameraRadius: 200.0,
     fudgeFactor: 1,
@@ -127,7 +124,6 @@ const main = () => {
   slider.slider_scaleX.oninput = updateScale(0, true);
   slider.slider_scaleY.oninput = updateScale(1, true);
   slider.slider_scaleZ.oninput = updateScale(2, true);
-  slider.slider_zoom.oninput = updateZoom(1);
   slider.slider_camera.oninput = updateCameraAngle(1);
   slider.slider_cameraR.oninput = updateCameraRadius(1);
   slider.slider_fudgeFactor.oninput = updateFudgeFactor(1);
@@ -141,7 +137,6 @@ const main = () => {
   slider.slider_component_scaleX.oninput = updateScale(0, false);
   slider.slider_component_scaleY.oninput = updateScale(1, false);
   slider.slider_component_scaleZ.oninput = updateScale(2, false);
-  slider.slider_component_zoom.oninput = updateZoom(2);
   slider.slider_component_camera.oninput = updateCameraAngle(2);
   slider.slider_component_cameraR.oninput = updateCameraRadius(2);
   slider.slider_component_fudgeFactor.oninput = updateFudgeFactor(2);
@@ -422,20 +417,6 @@ const main = () => {
     };
   }
 
-  function updateZoom(canvasNum) {
-    return function (event) {
-      if (canvasNum === 1) {
-        params1.zoom = event.target.value;
-        value.value_zoom.innerHTML = params1.zoom;
-      } else {
-        params2.zoom = event.target.value;
-        value.value_component_zoom.innerHTML = params2.zoom;
-      }
-
-      modelViewMatrix = drawBothScene();
-    };
-  }
-
   function updateProjection(canvasNum) {
     return function (event) {
       if (canvasNum === 1) {
@@ -515,7 +496,6 @@ const main = () => {
       value.value_scaleX.innerHTML = defParams.scale[0];
       value.value_scaleY.innerHTML = defParams.scale[1];
       value.value_scaleZ.innerHTML = defParams.scale[2];
-      value.value_zoom.innerHTML = defParams.zoom;
       value.value_camera.innerHTML = radToDeg(defParams.cameraAngleRadians);
       value.value_cameraR.innerHTML = defParams.cameraRadius;
       value.value_fudgeFactor.innerHTML = defParams.fudgeFactor;
@@ -530,7 +510,6 @@ const main = () => {
       slider.slider_scaleX.value = defParams.scale[0];
       slider.slider_scaleY.value = defParams.scale[1];
       slider.slider_scaleZ.value = defParams.scale[2];
-      slider.slider_zoom.value = defParams.zoom;
       slider.slider_camera.value = radToDeg(defParams.cameraAngleRadians);
       slider.slider_cameraR.value = defParams.cameraRadius;
     } else {
@@ -543,7 +522,6 @@ const main = () => {
       value.value_component_scaleX.innerHTML = defParams.scale[0];
       value.value_component_scaleY.innerHTML = defParams.scale[1];
       value.value_component_scaleZ.innerHTML = defParams.scale[2];
-      value.value_component_zoom.innerHTML = defParams.zoom;
       value.value_component_camera.innerHTML = radToDeg(
         defParams.cameraAngleRadians
       );
@@ -560,7 +538,6 @@ const main = () => {
       slider.slider_component_scaleX.value = defParams.scale[0];
       slider.slider_component_scaleY.value = defParams.scale[1];
       slider.slider_component_scaleZ.value = defParams.scale[2];
-      slider.slider_component_zoom.value = defParams.zoom;
       slider.slider_component_camera.value = radToDeg(
         defParams.cameraAngleRadians
       );
@@ -600,7 +577,6 @@ const main = () => {
 
   function reset(canvasNum) {
     if (canvasNum === 1) {
-      params1.zoom = defParams.zoom;
       params1.cameraAngleRadians = defParams.cameraAngleRadians;
       params1.cameraRadius = defParams.cameraRadius;
       params1.shading = defParams.shading;
@@ -612,7 +588,6 @@ const main = () => {
       defaultSlider(1);
       defaultCheckbox(1);
     } else {
-      params2.zoom = defParams.zoom;
       params2.cameraAngleRadians = defParams.cameraAngleRadians;
       params2.cameraRadius = defParams.cameraRadius;
       params2.shading = defParams.shading;
