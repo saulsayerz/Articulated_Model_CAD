@@ -13,7 +13,7 @@ import {
   slider,
   value,
 } from "./querySelector.js";
-import { recPosition, recReset, recRotation, recScale } from "./recursive.js";
+import { recPosition, recReset, recRotation, recScale, recTexture } from "./recursive.js";
 import { createProgram, drawCanvas } from "./script.js";
 import {
   loadTextureCube,
@@ -41,6 +41,7 @@ const main = () => {
   var prog2 = createProgram(gl2);
   var defaultModel = {};
   for (let object of model_anjing.parts) {
+    object["texture"] = model_anjing.texture_mode
     let newPart = new Object(
       object["name"],
       object["vertices"],
@@ -48,10 +49,12 @@ const main = () => {
       object["normals"],
       object["child"],
       object["sibling"],
+      object["texture"],
       object["rotate_axis"],
       object["rotate_min"],
       object["rotate_max"],
       object["rotate_speed"],
+      
     );
     defaultModel[object.name] = newPart;
   }
@@ -82,7 +85,6 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_anjing.texture_mode,
   };
 
   var params2 = {
@@ -96,7 +98,6 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_anjing.texture_mode,
   };
 
   var defParams = {
@@ -109,7 +110,6 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
-    texture: model_anjing.texture_mode,
   };
 
   // setup UI
@@ -177,6 +177,9 @@ const main = () => {
         var contents = event.target.result;
         var data = JSON.parse(contents);
         for (let object of data.parts) {
+          if(!object["texture"]){
+            object["texture"] = data.texture_mode;
+          }
           let newPart = new Object(
             object["name"],
             object["vertices"],
@@ -184,6 +187,7 @@ const main = () => {
             object["normals"],
             object["child"],
             object["sibling"],
+            object["texture"],
             object["rotate_axis"],
             object["rotate_min"],
             object["rotate_max"],
@@ -214,6 +218,7 @@ const main = () => {
         newPart["normals"] = [...params1.modelObject[key].normals];
         newPart["child"] = params1.modelObject[key].child;
         newPart["sibling"] = params1.modelObject[key].sibling;
+        newPart["texture"] = params1.modelObject[key].texture;
         newPart["rotate_axis"] = params1.modelObject[key].rotate_axis;
         newPart["rotate_min"] = params1.modelObject[key].rotate_min;
         newPart["rotate_max"] = params1.modelObject[key].rotate_max;
@@ -482,9 +487,19 @@ const main = () => {
   function updateTexture(canvasNum) {
     return function (event) {
       if (canvasNum === 1) {
-        params1.texture = event.target.value;
+        recTexture(
+          event.target.value,
+          params1.modelObject,
+          params1.root,
+          true
+        );
       } else {
-        params2.texture = event.target.value;
+        recTexture(
+          event.target.value,
+          params2.modelObject,
+          params2.root,
+          false
+        );
       }
 
       modelViewMatrix = drawBothScene();

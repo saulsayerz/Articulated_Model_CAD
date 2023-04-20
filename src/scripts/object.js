@@ -2,7 +2,7 @@ import { centerpoint, degToRad } from "./helper.js";
 import mat4 from "./matrix.js";
 
 class Object {
-  constructor(name, vertices, colors, normals, child, sibling, rotation_axis, min_angle, max_angle, rotate_speed) {
+  constructor(name, vertices, colors, normals, child, sibling, texture, rotation_axis, min_angle, max_angle, rotate_speed) {
     this.name = name;
     this.vertices = vertices;
     this.colors = colors;
@@ -19,6 +19,8 @@ class Object {
     this.rotate_max = max_angle;
     this.rotate_speed = rotate_speed;
     this.rotate_forward = 1;
+
+    this.texture = texture;
   }
 
   draw(gl, params, retValue, canvasNum, sibling = false) {
@@ -38,7 +40,7 @@ class Object {
     var heightScale = gl.getUniformLocation(params.program, "u_height_scale");
     var uViewPos = gl.getUniformLocation(params.program, "u_view_pos");
 
-    gl.uniform1i(textureMode, parseInt(params.texture, 10));
+    gl.uniform1i(textureMode, parseInt(this.texture, 10));
 
     gl.uniform3fv(lightPosition, [0.0, 5.0, 5.0])
 

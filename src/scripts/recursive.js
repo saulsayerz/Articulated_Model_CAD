@@ -34,6 +34,18 @@ export function recScale(index, value, modelObject, root, isSubTree, sibling = f
   }
 }
 
+export function recTexture(value, modelObject, root, isSubTree, sibling = false) {
+  modelObject[root].texture = value;
+  
+  if (modelObject[root].child !== "" && isSubTree) {
+    recTexture(value, modelObject, modelObject[root].child, isSubTree, true);
+  }
+
+  if (modelObject[root].sibling !== "" && sibling) {
+    recTexture(value, modelObject, modelObject[root].sibling, isSubTree, true);
+  }
+}
+
 export function recReset(modelObject, root, isSubTree, sibling=false) {
   modelObject[root].reset();
 
