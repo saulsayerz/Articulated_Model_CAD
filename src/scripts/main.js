@@ -552,7 +552,7 @@ const main = () => {
       params2.fudgeFactor = defParams.fudgeFactor;
       params2.projType = defParams.projType;
       params2.texture = defParams.texture;
-      radio.perspectiveRadio.checked = true;
+      radio.perspective_component_Radio.checked = true;
       resetTRS(2);
       defaultSlider(2);
       defaultCheckbox(2);
