@@ -73,6 +73,8 @@ export var button = {
   button_reset: document.querySelector("#reset"),
   button_component_reset: document.querySelector("#reset-component"),
 
+  button_animate: document.querySelector("#animate"),
+
   input_file: document.querySelector("#file"),
   button_save: document.querySelector("#save"),
   button_help: document.querySelector("#help"),

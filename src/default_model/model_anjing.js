@@ -135,7 +135,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "head",
-      "sibling" : ""
+      "sibling" : "",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "front_right_leg",
@@ -269,7 +273,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "front_left_leg"
+      "sibling" : "front_left_leg",
+      "rotate_axis" : 2,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
     {
       "name" : "front_left_leg",
@@ -403,7 +411,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "back_right_leg"
+      "sibling" : "back_right_leg",
+      "rotate_axis" : 2,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
     {
       "name" : "back_right_leg",
@@ -537,7 +549,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "back_left_leg"
+      "sibling" : "back_left_leg",
+      "rotate_axis" : 2,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
     {
       "name" : "back_left_leg",
@@ -671,7 +687,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "tail"
+      "sibling" : "tail",
+      "rotate_axis" : 2,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
     {
       "name" : "head",
@@ -805,7 +825,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "right_ear",
-      "sibling" : "front_right_leg"
+      "sibling" : "front_right_leg",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "right_ear",
@@ -939,7 +963,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "left_ear"
+      "sibling" : "left_ear",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "left_ear",
@@ -1073,7 +1101,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "right_eye"
+      "sibling" : "right_eye",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "tail",
@@ -1207,7 +1239,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : ""
+      "sibling" : "",
+      "rotate_axis" : 2,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
     {
       "name" : "right_eye",
@@ -1341,7 +1377,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "left_eye"
+      "sibling" : "left_eye",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "left_eye",
@@ -1475,7 +1515,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "mouth"
+      "sibling" : "mouth",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "mouth",
@@ -1609,7 +1653,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "tongue",
-      "sibling" : ""
+      "sibling" : "",
+      "rotate_axis" : 2,
+      "rotate_min" : 0,
+      "rotate_max" : 0,
+      "rotate_speed" : 0,
     },
     {
       "name" : "tongue",
@@ -1743,7 +1791,11 @@ export const model_anjing = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : ""
+      "sibling" : "",
+      "rotate_axis" : 2,
+      "rotate_min" : -10,
+      "rotate_max" : 10,
+      "rotate_speed" : 1,
     },
   ]
 }

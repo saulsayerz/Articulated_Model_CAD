@@ -48,7 +48,11 @@ const main = () => {
       object["colors"],
       object["normals"],
       object["child"],
-      object["sibling"]
+      object["sibling"],
+      object["rotate_axis"],
+      object["rotate_min"],
+      object["rotate_max"],
+      object["rotate_speed"],
     );
     defaultModel[object.name] = newPart;
   }
@@ -61,6 +65,8 @@ const main = () => {
   };
 
   var isSubTree = true;
+  var playing = false;
+  var frameId;
 
   var params1 = {
     modelObject: defaultModel,
@@ -153,6 +159,7 @@ const main = () => {
   button.button_save.onclick = save();
   button.input_file.onchange = load();
   button.button_help.onclick = openModal;
+  button.button_animate.onclick = animate();
 
   radio.orthogonalRadio.onclick = updateProjection(1);
   radio.perspectiveRadio.onclick = updateProjection(1);
@@ -177,7 +184,11 @@ const main = () => {
             object["colors"],
             object["normals"],
             object["child"],
-            object["sibling"]
+            object["sibling"],
+            object["rotate_axis"],
+            object["rotate_min"],
+            object["rotate_max"],
+            object["rotate_speed"],
           );
           params1.modelObject[object.name] = newPart;
         }
@@ -204,6 +215,10 @@ const main = () => {
         newPart["normals"] = [...params1.modelObject[key].normals];
         newPart["child"] = params1.modelObject[key].child;
         newPart["sibling"] = params1.modelObject[key].sibling;
+        newPart["rotate_axis"] = params1.modelObject[key].rotate_axis;
+        newPart["rotate_min"] = params1.modelObject[key].rotate_min;
+        newPart["rotate_max"] = params1.modelObject[key].rotate_max;
+        newPart["rotate_speed"] = params1.modelObject[key].rotate_speed;
         for (let i = 0; i < params1.modelObject[key].vertices.length; i+=3) {
           var res = mat4.multiplyVector(
             modelViewMatrix[key], [
@@ -269,6 +284,59 @@ const main = () => {
       isSubTree = subTree;
       modelViewMatrix = drawBothScene();
     };
+  }
+
+  function animate() {
+    return function (event) {
+      if (playing) {
+        playing = false;
+        cancelAnimationFrame(frameId);
+        frameId = undefined;
+        button.button_animate.innerHTML = "Animation";
+      } else {
+        playing = true;
+        frameId = requestAnimationFrame(animation);
+        button.button_animate.innerHTML = "Stop";
+      }
+    };
+  }
+
+  var then = 0;
+  function animation() {
+    var deltaTime = 0.01;
+    if (playing) {
+      for (const key in params1.modelObject) {
+        var axis = params1.modelObject[key].rotate_axis;
+        var speed = params1.modelObject[key].rotate_speed;
+        var min = params1.modelObject[key].rotate_min;
+        min = (min * Math.PI) / 180;
+        var max = params1.modelObject[key].rotate_max;
+        max = (max * Math.PI) / 180;
+        var angle = params1.modelObject[key].rotation[axis];
+        if (angle >= max) {
+          params1.modelObject[key].rotate_forward = -1;
+        } else if (angle <= min) {
+          params1.modelObject[key].rotate_forward = 1;
+        }
+        angle += speed * deltaTime * params1.modelObject[key].rotate_forward;
+        params1.modelObject[key].rotation[axis] = angle;
+        if (key == params1.root) {
+          angle = Math.round((angle * 180) / Math.PI);
+          if (axis == 0) {
+            value.value_component_angleX.innerHTML = angle;
+            slider.slider_component_angleX.value = angle;
+          } else if (axis == 1) {
+            value.value_component_angleY.innerHTML = angle;
+            slider.slider_component_angleY.value = angle;
+          } else {
+            value.value_component_angleZ.innerHTML = angle;
+            slider.slider_component_angleZ.value = angle;
+          }
+        }
+      }
+    }
+    modelViewMatrix = drawBothScene();
+    frameId = requestAnimationFrame(animation);
   }
 
   function updateRotation(index, subTree) {
@@ -564,7 +632,6 @@ const main = () => {
   }
 
   function treeClicked(event) {
-    console.log(event.target.name);
     params1.root = event.target.name;
     params2.root = event.target.name;
     drawBothScene();

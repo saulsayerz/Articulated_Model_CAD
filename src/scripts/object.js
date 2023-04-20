@@ -2,7 +2,7 @@ import { centerpoint, degToRad } from "./helper.js";
 import mat4 from "./matrix.js";
 
 class Object {
-  constructor(name, vertices, colors, normals, child, sibling) {
+  constructor(name, vertices, colors, normals, child, sibling, rotation_axis, min_angle, max_angle, rotate_speed) {
     this.name = name;
     this.vertices = vertices;
     this.colors = colors;
@@ -14,6 +14,11 @@ class Object {
     this.rotation = [degToRad(0), degToRad(0), degToRad(0)];
     this.scale = [1, 1, 1];
     this.center = centerpoint(this);
+    this.rotate_axis = rotation_axis;
+    this.rotate_min = min_angle;
+    this.rotate_max = max_angle;
+    this.rotate_speed = rotate_speed;
+    this.rotate_forward = 1;
   }
 
   draw(gl, params, retValue, canvasNum, sibling = false) {
