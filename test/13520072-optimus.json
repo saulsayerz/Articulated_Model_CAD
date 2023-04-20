@@ -3715,6 +3715,10 @@
     },
     {
       "name": "left_arm",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         -80,
         0,
@@ -4086,6 +4090,10 @@
     },
     {
       "name": "right_arm",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         60,
         0,
@@ -4457,6 +4465,10 @@
     },
     {
       "name": "left_leg",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         -60,
         -160,
@@ -4828,6 +4840,10 @@
     },
     {
       "name": "right_leg",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         20,
         -160,
@@ -5941,6 +5957,10 @@
     },
     {
       "name": "left_foot",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         -67,
         -180,
@@ -6312,6 +6332,10 @@
     },
     {
       "name": "right_foot",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         17,
         -180,
@@ -6683,6 +6707,10 @@
     },
     {
       "name": "left_hand",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         -80,
         -20,
@@ -7054,6 +7082,10 @@
     },
     {
       "name": "right_hand",
+      "rotate_axis": 0,
+      "rotate_min": -15,
+      "rotate_max": 15,
+      "rotate_speed": 1.5,
       "vertices": [
         60,
         -20,
