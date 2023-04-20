@@ -3,7 +3,7 @@ Program berbasis website ini dibuat untuk menyelesaikan Tugas Besar 3 IF3260 Gra
 
 ## Deskripsi program
 Program dibuat berupa suatu perangkat lunak computer-aided design (CAD) 3 dimensi untuk model articulated yang dijalankan dalam sebuah website. Website ini ditujukan untuk memenuhi Tugas Besar 3 pada mata kuliah IF3260 Grafika Komputer untuk tahun ajaran 2022/2023. Program ini dirancang dengan menggunakan bahasa pemrograman HTML, CSS, dan vanilla Javascript.
-Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kanvas tersebut sehingga model articulated 3D yang sudah disediakan dapat divisualisasikan. Terdapat berbagai fitur yang dapat diaplikasikan dalam model tersebut oleh pengguna. Fitur - fitur tersebut akan disebutkan di bawah ini.
+Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kanvas tersebut sehingga model articulated 3D yang sudah disediakan dapat divisualisasikan. Disediakan juga toolbar di sisi kanan website yang berisi fitur  - fitur untuk diaplikasikan pada articulated model yang sedang divisualisasikan. Fitur - fitur tersebut akan disebutkan di bawah ini.
 
 ## Fitur Wajib
 
