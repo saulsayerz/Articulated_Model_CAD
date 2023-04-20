@@ -92,5 +92,8 @@ export var select = {
   // ARTICULATED
   select_texture: document.querySelector("#texture-dropdown"),
   select_component_texture: document.querySelector("#texture-component-dropdown"),
+
+  select_texture_image: document.querySelector("#texture-image"),
+  select_component_texture_image: document.querySelector("#texture-component-image"),
 };
 

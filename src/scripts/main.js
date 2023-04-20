@@ -151,6 +151,9 @@ const main = () => {
   select.select_texture.onchange = updateTexture(1);
   select.select_component_texture.onchange = updateTexture(2);
 
+  select.select_texture_image.onchange = updateTextureImage(1);
+  select.select_component_texture_image.onchange = updateTextureImage(2);
+
   button.button_save.onclick = save();
   button.input_file.onchange = load();
   button.button_help.onclick = openModal;
@@ -487,6 +490,19 @@ const main = () => {
     };
   }
 
+  function updateTextureImage(canvasNum) {
+    return function (event) {
+      if (canvasNum === 1) {
+        loadTexture2D(gl, prog, `assets/custom/${event.target.value}.jpg`, 1)
+        modelViewMatrix = drawBothScene();
+      } else {
+        loadTexture2D(gl2, prog2, `assets/custom/${event.target.value}.jpg`, 1)
+        modelViewMatrix = drawBothScene();
+      }
+
+    }
+  }
+
   function updateShading(canvasNum) {
     return function (event) {
       if (canvasNum === 1) {
@@ -637,12 +653,12 @@ const main = () => {
     return ret1;
   }
 
-  loadTexture2D(gl, prog, 'assets/custom/custom.jpg', 1)
+  loadTexture2D(gl, prog, 'assets/custom/wood.jpg', 1)
   loadTextureCube(gl, prog);
   loadTexture2D(gl, prog, 'assets/bump/toy_box_normal.png', 3)
   loadTexture2D(gl, prog, 'assets/bump/woodtiles.jpg', 4)
 
-  loadTexture2D(gl2, prog2, 'assets/custom/custom.jpg', 1)
+  loadTexture2D(gl2, prog2, 'assets/custom/wood.jpg', 1)
   loadTextureCube(gl2, prog2);
   loadTexture2D(gl2, prog2, 'assets/bump/toy_box_normal.png', 3)
   loadTexture2D(gl2, prog2, 'assets/bump/woodtiles.jpg', 4)
