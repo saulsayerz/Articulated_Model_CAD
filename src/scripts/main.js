@@ -189,17 +189,33 @@ const main = () => {
 
   function save() {
     return function (event) {
-      var copyObj = JSON.parse(JSON.stringify(params1.modelObject));
-      for (let i = 0; i < params1.modelObject.vertices.length; i += 3) {
-        var res = mat4.multiplyVector(modelViewMatrix, [
-          params1.modelObject.vertices[i],
-          params1.modelObject.vertices[i + 1],
-          params1.modelObject.vertices[i + 2],
-          1,
-        ]);
-        copyObj.vertices[i] = res[0];
-        copyObj.vertices[i + 1] = res[1];
-        copyObj.vertices[i + 2] = res[2];
+      var copyObj = {};
+      copyObj["model_name"] = "model";
+      copyObj["root_name"] = params1.root;
+      copyObj["texture_mode"] = params1.texture;
+      copyObj["parts"] = [];
+      for (const key in params1.modelObject) {
+        let newPart = {};
+        newPart["name"] = key;
+        newPart["colors"] = [...params1.modelObject[key].colors];
+        newPart["vertices"] = [...params1.modelObject[key].vertices];
+        newPart["normals"] = [...params1.modelObject[key].normals];
+        newPart["child"] = params1.modelObject[key].child;
+        newPart["sibling"] = params1.modelObject[key].sibling;
+        for (let i = 0; i < params1.modelObject[key].vertices.length; i+=3) {
+          var res = mat4.multiplyVector(
+            modelViewMatrix[key], [
+              params1.modelObject[key].vertices[i],
+              params1.modelObject[key].vertices[i + 1],
+              params1.modelObject[key].vertices[i + 2],
+              1,
+            ]
+          );
+          newPart["vertices"][i] = res[0];
+          newPart["vertices"][i + 1] = res[1];
+          newPart["vertices"][i + 2] = res[2];
+        }
+        copyObj["parts"].push(newPart);
       }
       var data = JSON.stringify(copyObj);
       var blob = new Blob([data], { type: "text/plain;charset=utf-8" });
