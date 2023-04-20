@@ -1,5 +1,4 @@
 import { model_anjing } from "../default_model/model_anjing.js";
-import { model_bebek } from "../default_model/model_bebek.js";
 import { generateTree } from "./componentTree.js";
 import { closeModal, modal, openModal } from "./help.js";
 import { centerpoint, degToRad, radToDeg } from "./helper.js";
