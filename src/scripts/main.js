@@ -108,8 +108,10 @@ const main = () => {
   };
 
   // setup UI
-  defaultSlider();
-  defaultCheckbox();
+  defaultSlider(1);
+  defaultSlider(2);
+  defaultCheckbox(1);
+  defaultCheckbox(2);
   defaultSelect();
   slider.slider_transX.oninput = updatePosition(0, true);
   slider.slider_transY.oninput = updatePosition(1, true);
@@ -237,13 +239,13 @@ const main = () => {
 
         if (index == 0)
           value.value_transX.innerHTML =
-            params1.modelObject[params1.root].translation[index];
+            params1.translation[index];
         else if (index == 1)
           value.value_transY.innerHTML =
-            params1.modelObject[params1.root].translation[index];
+            params1.translation[index];
         else
           value.value_transZ.innerHTML =
-            params1.modelObject[params1.root].translation[index];
+            params1.translation[index];
       } else {
         recPosition(
           index,
@@ -307,13 +309,13 @@ const main = () => {
 
         if (index == 0)
           value.value_scaleX.innerHTML =
-            params1.modelObject[params1.root].scale[index];
+            params1.scale[index];
         else if (index == 1)
           value.value_scaleY.innerHTML =
-            params1.modelObject[params1.root].scale[index];
+            params1.scale[index];
         else
           value.value_scaleZ.innerHTML =
-            params1.modelObject[params1.root].scale[index];
+            params1.scale[index];
       } else {
         recScale(
           index,
