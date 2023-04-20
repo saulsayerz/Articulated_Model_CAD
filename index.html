@@ -221,272 +221,296 @@
 
     </div>
   </div>
-
+  
   <!-- ARTICULATED CANVAS -->
-  <div class="canvasContainer">
-    <canvas id="myCanvas" class="canvas"></canvas>
-    <canvas id="myCanvas2" class="canvas"></canvas>
-  </div>
-
-  <div class="fixed-toolbar">
-    <div class="toolbar">
-      <div id="uiContainer">
-        <div id="ui">
-          <div class="tools-label">PROJECTION TYPE</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-shading"></div>
-              <input id="orthogonal" type="radio" name="perspective-option" value="orthogonal">
-              <label for="orthogonal">Orthogonal</label>
-              <input id="perspective" type="radio" name="perspective-option" value="perspective" checked>
-              <label for="perspective">Perspective</label>
-              <input id="oblique" type="radio" name="perspective-option" value="oblique">
-              <label for="oblique">Oblique</label>
+  <div id="flexContainer">
+  
+    <div class="canvasContainer">
+      <canvas id="myCanvas" class="canvas"></canvas>
+      <canvas id="myCanvas2" class="canvas"></canvas>
+    </div>
+  
+    <div class="fixed-toolbar">
+      <div class="toolbar">
+        <div class="title">
+          Select Model
+        </div>
+        <div id="uiContainer">
+          <div id="ui">
+            <div>
+              <input type="file" id="file" accept=".json" />
+            </div>
+            <div>
+              <button id="save">Save</button>
+              <button id="reset">Reset</button>
+              <button id="help">Help</button>
+              <button id="reset-component">Reset</button>
             </div>
           </div>
-          <br>
-          <div class="outer">
-            <div class="label">Fudge Factor</div>
-            <div id="value-fudgeFactor"></div>
-            <input id="slider-fudgeFactor" type="range" min="0.1" max="5" step="0.05" value="1" />
+        </div>
+        <div class="title">
+          General Controls
+        </div>
+        <div id="uiContainer">
+          <div id="ui">
+            <hr>
+            <div class="tools-label">PROJECTION TYPE</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-shading"></div>
+                <input id="orthogonal" type="radio" name="perspective-option" value="orthogonal">
+                <label for="orthogonal">Orthogonal</label>
+                <input id="perspective" type="radio" name="perspective-option" value="perspective" checked>
+                <label for="perspective">Perspective</label>
+                <input id="oblique" type="radio" name="perspective-option" value="oblique">
+                <label for="oblique">Oblique</label>
+              </div>
+            </div>
+            <br>
+            <div class="outer">
+              <div class="label">Fudge Factor</div>
+              <div id="value-fudgeFactor"></div>
+              <input id="slider-fudgeFactor" type="range" min="0.1" max="5" step="0.05" value="1" />
+            </div>
+            <hr>
+            <div class="tools-label">TRANSLATE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">translation-x</div>
+                <div id="value-x"></div>
+                <input id="slider-x" type="range" min="-360" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">translation-y</div>
+                <div id="value-y"></div>
+                <input id="slider-y" type="range" min="-360" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">translation-z</div>
+                <div id="value-z"></div>
+                <input id="slider-z" type="range" min="-800" max="800" step="1" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">ROTATE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">rotation-X</div>
+                <div id="value-angleX"></div>
+                <input id="slider-angleX" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">rotation-Y</div>
+                <div id="value-angleY"></div>
+                <input id="slider-angleY" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">rotation-Z</div>
+                <div id="value-angleZ"></div>
+                <input id="slider-angleZ" type="range" min="0" max="360" step="1" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">SCALE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">scaling-X</div>
+                <div id="value-scaleX"></div>
+                <input id="slider-scaleX" type="range" min="0" max="10" step="0.1" />
+              </div>
+              <div class="outer">
+                <div class="label">scaling-Y</div>
+                <div id="value-scaleY"></div>
+                <input id="slider-scaleY" type="range" min="0" max="10" step="0.1" />
+              </div>
+              <div class="outer">
+                <div class="label">scaling-Z</div>
+                <div id="value-scaleZ"></div>
+                <input id="slider-scaleZ" type="range" min="0" max="10" step="0.1" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">CAMERA</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">camera</div>
+                <div id="value-camera"></div>
+                <input id="slider-camera" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">camera-radius</div>
+                <div id="value-cameraR"></div>
+                <input id="slider-cameraR" type="range" min="1" max="360" step="1" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">ZOOM</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-zoom"></div>
+                <input id="slider-zoom" type="range" min="0.1" max="5" step="0.1" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">SHADING</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-shading"></div>
+                <input id="check-shading" type="checkbox" />
+              </div>
+            </div>
+            <hr>
+            <div class="tools-label">TEXTURE</div>
+            <div class="tools">
+              <label for="texture-dropdown">Texture Type:</label>
+              <select id="texture-dropdown">
+                <option value="0">None</option>
+                <option value="1">Custom</option>
+                <option value="2">Environment</option>
+                <option value="3">Bump</option>
+              </select>
+            </div>
+            <hr>
           </div>
-          <hr>
-          <div class="tools-label">TRANSLATE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">translation-x</div>
-              <div id="value-x"></div>
-              <input id="slider-x" type="range" min="-360" max="360" step="1" />
+        </div>
+        <div class="title">
+          Component Tree
+        </div>
+        <div id="uiContainer">
+          <div id="ui">
+            <div id="component-tree">
+              <!-- DIISI COMPONENT TREE -->
             </div>
-            <div class="outer">
-              <div class="label">translation-y</div>
-              <div id="value-y"></div>
-              <input id="slider-y" type="range" min="-360" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">translation-z</div>
-              <div id="value-z"></div>
-              <input id="slider-z" type="range" min="-800" max="800" step="1" />
-            </div>
+            <br>
           </div>
-          <hr>
-          <div class="tools-label">ROTATE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">rotation-X</div>
-              <div id="value-angleX"></div>
-              <input id="slider-angleX" type="range" min="0" max="360" step="1" />
+        </div>
+        <div class="title">
+          Component Controls
+        </div>
+        <div id="uiContainer">
+          <div id="ui">
+            <hr>
+            <div class="tools-label">PROJECTION TYPE</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-component-shading"></div>
+                <input id="orthogonal-component" type="radio" name="perspective-option" value="orthogonal">
+                <label for="orthogonal-component">Orthogonal</label>
+                <input id="perspective-component" type="radio" name="perspective-option" value="perspective" checked>
+                <label for="perspective-component">Perspective</label>
+                <input id="oblique-component" type="radio" name="perspective-option" value="oblique">
+                <label for="oblique-component">Oblique</label>
+              </div>
             </div>
+            <br>
             <div class="outer">
-              <div class="label">rotation-Y</div>
-              <div id="value-angleY"></div>
-              <input id="slider-angleY" type="range" min="0" max="360" step="1" />
+              <div class="label">Fudge Factor</div>
+              <div id="value-component-fudgeFactor"></div>
+              <input id="slider-component-fudgeFactor" type="range" min="0.1" max="5" step="0.05" value="1" />
             </div>
-            <div class="outer">
-              <div class="label">rotation-Z</div>
-              <div id="value-angleZ"></div>
-              <input id="slider-angleZ" type="range" min="0" max="360" step="1" />
+            <hr>
+            <div class="tools-label">TRANSLATE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">translation-x</div>
+                <div id="value-component-x"></div>
+                <input id="slider-component-x" type="range" min="-360" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">translation-y</div>
+                <div id="value-component-y"></div>
+                <input id="slider-component-y" type="range" min="-360" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">translation-z</div>
+                <div id="value-component-z"></div>
+                <input id="slider-component-z" type="range" min="-800" max="800" step="1" />
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="tools-label">SCALE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">scaling-X</div>
-              <div id="value-scaleX"></div>
-              <input id="slider-scaleX" type="range" min="0" max="10" step="0.1" />
+            <hr>
+            <div class="tools-label">ROTATE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">rotation-X</div>
+                <div id="value-component-angleX"></div>
+                <input id="slider-component-angleX" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">rotation-Y</div>
+                <div id="value-component-angleY"></div>
+                <input id="slider-component-angleY" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">rotation-Z</div>
+                <div id="value-component-angleZ"></div>
+                <input id="slider-component-angleZ" type="range" min="0" max="360" step="1" />
+              </div>
             </div>
-            <div class="outer">
-              <div class="label">scaling-Y</div>
-              <div id="value-scaleY"></div>
-              <input id="slider-scaleY" type="range" min="0" max="10" step="0.1" />
+            <hr>
+            <div class="tools-label">SCALE</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">scaling-X</div>
+                <div id="value-component-scaleX"></div>
+                <input id="slider-component-scaleX" type="range" min="0" max="10" step="0.1" />
+              </div>
+              <div class="outer">
+                <div class="label">scaling-Y</div>
+                <div id="value-component-scaleY"></div>
+                <input id="slider-component-scaleY" type="range" min="0" max="10" step="0.1" />
+              </div>
+              <div class="outer">
+                <div class="label">scaling-Z</div>
+                <div id="value-component-scaleZ"></div>
+                <input id="slider-component-scaleZ" type="range" min="0" max="10" step="0.1" />
+              </div>
             </div>
-            <div class="outer">
-              <div class="label">scaling-Z</div>
-              <div id="value-scaleZ"></div>
-              <input id="slider-scaleZ" type="range" min="0" max="10" step="0.1" />
+            <hr>
+            <div class="tools-label">CAMERA</div>
+            <div class="tools">
+              <div class="outer">
+                <div class="label">camera</div>
+                <div id="value-component-camera"></div>
+                <input id="slider-component-camera" type="range" min="0" max="360" step="1" />
+              </div>
+              <div class="outer">
+                <div class="label">camera-radius</div>
+                <div id="value-component-cameraR"></div>
+                <input id="slider-component-cameraR" type="range" min="1" max="360" step="1" />
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="tools-label">CAMERA</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">camera</div>
-              <div id="value-camera"></div>
-              <input id="slider-camera" type="range" min="0" max="360" step="1" />
+            <hr>
+            <div class="tools-label">ZOOM</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-component-zoom"></div>
+                <input id="slider-component-zoom" type="range" min="0.1" max="5" step="0.1" />
+              </div>
             </div>
-            <div class="outer">
-              <div class="label">camera-radius</div>
-              <div id="value-cameraR"></div>
-              <input id="slider-cameraR" type="range" min="1" max="360" step="1" />
+            <hr>
+            <div class="tools-label">SHADING</div>
+            <div class="tools">
+              <div class="outer">
+                <div id="value-component-shading"></div>
+                <input id="check-component-shading" type="checkbox" />
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="tools-label">ZOOM</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-zoom"></div>
-              <input id="slider-zoom" type="range" min="0.1" max="5" step="0.1" />
+            <hr>
+            <div class="tools-label">TEXTURE</div>
+            <div class="tools">
+              <label for="texture-component-dropdown">Texture Type:</label>
+              <select id="texture-component-dropdown">
+                <option value="0">None</option>
+                <option value="1">Custom</option>
+                <option value="2">Environment</option>
+                <option value="3">Bump</option>
+              </select>
             </div>
-          </div>
-          <hr>
-          <div class="tools-label">SHADING</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-shading"></div>
-              <input id="check-shading" type="checkbox" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">TEXTURE</div>
-          <div class="tools">
-            <label for="texture-dropdown">Texture Type:</label>
-            <select id="texture-dropdown">
-              <option value="0">None</option>
-              <option value="1">Custom</option>
-              <option value="2">Environment</option>
-              <option value="3">Bump</option>
-            </select>
-          </div>
-          <hr>
-          <div>
-            <input type="file" id="file" accept=".json" />
-          </div>
-          <div>
-            <button id="save">Save</button>
-            <button id="reset">Reset</button>
-            <button id="help">Help</button>
-          </div>
-          <hr>
-          <div class="tools-label">COMPONENT TREE</div>
-          <div id="component-tree">
-            <!-- DIISI COMPONENT TREE -->
-          </div>
-          <hr>
-          <div class="tools-label">PROJECTION TYPE</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-component-shading"></div>
-              <input id="orthogonal-component" type="radio" name="perspective-option" value="orthogonal">
-              <label for="orthogonal-component">Orthogonal</label>
-              <input id="perspective-component" type="radio" name="perspective-option" value="perspective" checked>
-              <label for="perspective-component">Perspective</label>
-              <input id="oblique-component" type="radio" name="perspective-option" value="oblique">
-              <label for="oblique-component">Oblique</label>
-            </div>
-          </div>
-          <br>
-          <div class="outer">
-            <div class="label">Fudge Factor</div>
-            <div id="value-component-fudgeFactor"></div>
-            <input id="slider-component-fudgeFactor" type="range" min="0.1" max="5" step="0.05" value="1" />
-          </div>
-          <hr>
-          <div class="tools-label">TRANSLATE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">translation-x</div>
-              <div id="value-component-x"></div>
-              <input id="slider-component-x" type="range" min="-360" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">translation-y</div>
-              <div id="value-component-y"></div>
-              <input id="slider-component-y" type="range" min="-360" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">translation-z</div>
-              <div id="value-component-z"></div>
-              <input id="slider-component-z" type="range" min="-800" max="800" step="1" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">ROTATE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">rotation-X</div>
-              <div id="value-component-angleX"></div>
-              <input id="slider-component-angleX" type="range" min="0" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">rotation-Y</div>
-              <div id="value-component-angleY"></div>
-              <input id="slider-component-angleY" type="range" min="0" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">rotation-Z</div>
-              <div id="value-component-angleZ"></div>
-              <input id="slider-component-angleZ" type="range" min="0" max="360" step="1" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">SCALE</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">scaling-X</div>
-              <div id="value-component-scaleX"></div>
-              <input id="slider-component-scaleX" type="range" min="0" max="10" step="0.1" />
-            </div>
-            <div class="outer">
-              <div class="label">scaling-Y</div>
-              <div id="value-component-scaleY"></div>
-              <input id="slider-component-scaleY" type="range" min="0" max="10" step="0.1" />
-            </div>
-            <div class="outer">
-              <div class="label">scaling-Z</div>
-              <div id="value-component-scaleZ"></div>
-              <input id="slider-component-scaleZ" type="range" min="0" max="10" step="0.1" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">CAMERA</div>
-          <div class="tools">
-            <div class="outer">
-              <div class="label">camera</div>
-              <div id="value-component-camera"></div>
-              <input id="slider-component-camera" type="range" min="0" max="360" step="1" />
-            </div>
-            <div class="outer">
-              <div class="label">camera-radius</div>
-              <div id="value-component-cameraR"></div>
-              <input id="slider-component-cameraR" type="range" min="1" max="360" step="1" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">ZOOM</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-component-zoom"></div>
-              <input id="slider-component-zoom" type="range" min="0.1" max="5" step="0.1" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">SHADING</div>
-          <div class="tools">
-            <div class="outer">
-              <div id="value-component-shading"></div>
-              <input id="check-component-shading" type="checkbox" />
-            </div>
-          </div>
-          <hr>
-          <div class="tools-label">TEXTURE</div>
-          <div class="tools">
-            <label for="texture-component-dropdown">Texture Type:</label>
-            <select id="texture-component-dropdown">
-              <option value="0">None</option>
-              <option value="1">Custom</option>
-              <option value="2">Environment</option>
-              <option value="3">Bump</option>
-            </select>
-          </div>
-          <hr>
-          <div>
-            <button id="reset-component">Reset</button>
+            <hr>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </body>
 
