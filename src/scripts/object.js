@@ -135,9 +135,9 @@ class Object {
     modelMatrix = mat4.multiply(
       modelMatrix,
       mat4.scale(
-        this.scale[0] * params.zoom,
-        this.scale[1] * params.zoom,
-        this.scale[2] * params.zoom
+        this.scale[0],
+        this.scale[1],
+        this.scale[2]
       )
     );
 
