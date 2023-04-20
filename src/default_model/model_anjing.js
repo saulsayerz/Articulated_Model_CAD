@@ -1793,9 +1793,9 @@ export const model_anjing = {
       "child" : "",
       "sibling" : "",
       "rotate_axis" : 2,
-      "rotate_min" : -10,
-      "rotate_max" : 10,
-      "rotate_speed" : 1,
+      "rotate_min" : -30,
+      "rotate_max" : 30,
+      "rotate_speed" : 3,
     },
   ]
 }

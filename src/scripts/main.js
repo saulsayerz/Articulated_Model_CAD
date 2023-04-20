@@ -300,17 +300,14 @@ const main = () => {
     };
   }
 
-  var then = 0;
   function animation() {
     var deltaTime = 0.01;
     if (playing) {
       for (const key in params1.modelObject) {
         var axis = params1.modelObject[key].rotate_axis;
         var speed = params1.modelObject[key].rotate_speed;
-        var min = params1.modelObject[key].rotate_min;
-        min = (min * Math.PI) / 180;
-        var max = params1.modelObject[key].rotate_max;
-        max = (max * Math.PI) / 180;
+        var min = (params1.modelObject[key].rotate_min * Math.PI) / 180;
+        var max = (params1.modelObject[key].rotate_max * Math.PI) / 180;
         var angle = params1.modelObject[key].rotation[axis];
         if (angle >= max) {
           params1.modelObject[key].rotate_forward = -1;
