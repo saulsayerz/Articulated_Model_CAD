@@ -188,7 +188,7 @@ const main = () => {
         }
         params1.root = data.root_name;
         reset();
-        generateTree(params1.modelObject, params1.root);
+        generateTree(params1.modelObject, params1.root, treeClicked);
       };
       reader.readAsText(file);
     };
