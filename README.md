@@ -9,16 +9,17 @@ Website ini menyediakan kanvas digital pada browser sedemikian sehingga pada kan
 
 1. Proyeksi: Ortographic, Perspective, Oblique
 2. Transformasi: Translasi, Rotasi, Scale
-3. Camera Radius
+3. Camera Radius + Camera Angle
 4. Shading
 5. Texture: Bump, Reflective, Custom
 6. Animasi
 7. Reset
 8. Help
 9. Save/Load
-10. Component Controls, Terintegrasi dengan fitur bonus.
+10. Component Tree + Controls, Terintegrasi dengan fitur bonus.
 
 ## Fitur Bonus (Jalur Component Heavy)
+- Animation smoothing : Animasi dibuat lebih halus dengan tidak membuat 9 frame animasi yang berbeda, melainkan membuat setiap objek berputar dengan kecepatan dan sudut yang berbeda berdasarkan atribut yang dimiliki.
 - Component Tree : Tersedia pohon komponen yang bisa diclick untuk memilih komponen yang akan diubah
 - Component View Controls (Single) : Tersedia satu component control untuk komponen terpilih, meliputi fitur wajib 1-5 untuk tiap komponen. 
 
