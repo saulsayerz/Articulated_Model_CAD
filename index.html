@@ -141,7 +141,7 @@
           float kd = max(dot(mapN, L), 0.0);
 
           vec3 color = texture2D(u_diffuseColor, uv.st).rgb;
-          vec3 light_col = (0.1 + kd) * color.rgb;
+          vec3 light_col = (0.75 + kd) * color.rgb;
 
           gl_FragColor = vec4(clamp(light_col, 0.0, 1.0), 1.0);
         } else {
@@ -217,15 +217,15 @@
 
     </div>
   </div>
-  
+
   <!-- ARTICULATED CANVAS -->
   <div id="flexContainer">
-  
+
     <div class="canvasContainer">
       <canvas id="myCanvas" class="canvas"></canvas>
       <canvas id="myCanvas2" class="canvas"></canvas>
     </div>
-  
+
     <div class="fixed-toolbar">
       <div class="toolbar">
         <div class="title">
@@ -384,7 +384,8 @@
               <div class="outer">
                 <input id="orthogonal-component" type="radio" name="perspective-component-option" value="orthogonal">
                 <label for="orthogonal-component">Orthogonal</label>
-                <input id="perspective-component" type="radio" name="perspective-component-option" value="perspective" checked>
+                <input id="perspective-component" type="radio" name="perspective-component-option" value="perspective"
+                  checked>
                 <label for="perspective-component">Perspective</label>
                 <input id="oblique-component" type="radio" name="perspective-component-option" value="oblique">
                 <label for="oblique-component">Oblique</label>
