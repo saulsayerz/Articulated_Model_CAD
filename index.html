@@ -164,9 +164,23 @@
         model, dapat clear canvas terlebih dahulu saja.</p>
       <pre>
         {
-          posistions: [ // vertices ],
-          colors: [r, g, b, a],
-          normals: [ // normal surfaces]
+          “model_name”:...,
+          “root_name”:...,
+          “texture_mode”:...,
+          “Parts”:[
+            {
+            “name”:...
+            “vertices”:[],
+            “colors”: [],
+            “normals”: [],
+            “child”:...,
+            “sibling”:...,
+            “rotate_axis”:...,
+            “rotate_min”:...,
+            “rotate_max”:...,
+            “rotate_speed”:...
+            }
+          ]
         }
         </pre>
       <h1>Projections</h1>
@@ -180,40 +194,65 @@
       <h2>- Oblique</h2>
       <p>Untuk memilih proyeksi ini, cukup click radio button oblique. Kami menggunakan cabinet oblique.</p>
 
-      <h1>Translate</h1>
+      <h1>Translate model + component</h1>
       <p>Melakukan translasi objek 3d pada sumbu yang dipilih pada slider yang sesuai. Terdapat pilihan untuk melakukan
         translasi pada sumbu-X, sumbu-Y, dan sumbu-Z. Nilai translasi yang dapat dipilih adalah -360 sampai 360 pada
         masing-masing sumbu.</p>
 
-      <h1>Rotate</h1>
+      <h1>Rotate model+component</h1>
       <p>Melakukan rotasi objek 3d pada sumbu yang dipilih pada slider yang sesuai. Terdapat pilihan untuk melakukan
         rotasi pada sumbu-X, sumbu-Y, dan sumbu-Z. Nilai rotasi yang dapat dipilih adalah -360 sampai 360 pada
         masing-masing sumbu.</p>
 
-      <h1>Scale</h1>
+      <h1>Scale model+component</h1>
       <p>Melakukan scaling objek 3d pada sumbu yang dipilih pada slider yang sesuai. Terdapat pilihan untuk melakukan
         scaling pada sumbu-X, sumbu-Y, dan sumbu-Z. Nilai scaling yang dapat dipilih adalah 0.1 sampai 10 pada
         masing-masing sumbu.</p>
 
-      <h1>Camera</h1>
+      <h1>Camera view model+component</h1>
       <p>Camera dapat digunakan untuk memutari objek pada sumbu-X, sumbu-Y, dan juga sumbu-Z. Camera akan fokus pada
         titik origin (0,0,0) dan berada pada jarak radius yang juga dapat dipilih pada toolbar. Rotasi camera dapat
         dipilih antara sudut 0 sampai 360 derajat sedangkan radius camera dapat dipilih dari 1 sampai 360.</p>
 
-      <h1>Reset</h1>
+      <h1>Reset model+component</h1>
       <p>Terdapat tombol reset view yang disediakan pada toolbar untuk mengembalikan tampilan objek menjadi tampilan
         default.</p>
 
-      <h1>Shading</h1>
+      <h1>Shading model+component</h1>
       <p>Untuk melakukan shading dari suatu objek, maka bisa menekan checkbox shading yang disediakan pada toolbar.
         Checkbox bisa diklik lagi agar shading dapat dinonaktifkan.</p>
+
+      <h1>Texture model+component</h1>
+      <p>Untuk menambahkan texture dari model atau component, dapat dipilih beberapa mode tekstur yang tersedia. Mode tersebut
+      antara lain, custom (dari gambar), environment, dan bump. Pada pilihan custom image, pengguna juga dapat memilih salah
+      satu tekstur gambar yang sudah tersedia.</p>
 
       <h1>Save</h1>
       <p>Apabila selesai melakukan transformasi dari sebuah model, maka bisa menekan tombol save yang disediakan di
         paling kanan bawah. Model terbaru akan terdownload pada perangkat pengguna dengan nama model.json </p>
 
-      <h1>Clear Canvas</h1>
-      <p>Untuk menghapus semua model yang sudah di load</p>
+      <h1>Animation + Smoothing</h1>
+      <p>Setiap parts dari model yang di load atau sedang ditampilkan memiliki atribut yang dapat digunakan untuk menganimasikan
+      model. Tekan tombol Animation pada kanan atas dan setiap parts akan bergerak sesuai atributnya masing-masing. Untuk
+      menghentikan animasi, cukup menekan tombol yang sama. Animation menggunakan smoothing agar gerakan yang dihasilkan lebih
+      jelas. Fitur smoothing merupakan fitur bonus.</p>
+
+      <h1>Reset model + Reset component</h1>
+      <p>Terdapat dua tombol reset pada program ini, “Reset” dan “Reset Component”. Tombol “Reset” berguna untuk mereset model
+      secara keseluruhan serta view pada canvas keseluruhan. Tombol “Reset Component” berguna untuk mereset komponen yang
+      sedang dipilih serta view pada canvas komponen.</p>
+
+      <h1>Component Tree</h1>
+      <p>Apabila sebuah articulated model dimuat pada program, akan muncul component tree dari program tersebut. Component tree
+      ini merepresentasikan struktur hirarki dari model yang dimuat. Untuk melakukan transformasi terhadap beberapa bagian
+      dari model, harus memilih bagian tersebut dengan klik bagian yang bersesuain pada component tree. Ini merupakan fitur
+      <strong>bonus</strong></p>
+
+      <h1>Component View Controls (Single)</h1>
+      <p>AApabila sebuah komponen sudah dipilih dari component tree, komponen tersebut bisa di transformasi menggunakan slider
+      component controls pada bagian bawah. Slider ini akan mengubah spesifik pada komponen tersebut.Ini merupakan fitur
+      <strong>bonus</strong>
+      </p>
 
     </div>
   </div>
