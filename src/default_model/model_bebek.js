@@ -938,7 +938,7 @@ export const model_bebek = {
         0, -1, 0,
         0, -1, 0
       ],
-      "child" : "",
+      "child" : "right_feet",
       "sibling" : ""
     },
     {
@@ -1609,7 +1609,7 @@ export const model_bebek = {
         0, -1, 0
       ],
       "child" : "",
-      "sibling" : "right_feet"
+      "sibling" : ""
     },
     {
       "name" : "right_feet",

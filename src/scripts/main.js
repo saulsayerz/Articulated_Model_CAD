@@ -41,7 +41,7 @@ const main = () => {
   var prog = createProgram(gl);
   var prog2 = createProgram(gl2);
   var defaultModel = {};
-  for (let object of model_bebek.parts) {
+  for (let object of model_anjing.parts) {
     let newPart = new Object(
       object["name"],
       object["vertices"],
@@ -52,7 +52,7 @@ const main = () => {
     );
     defaultModel[object.name] = newPart;
   }
-  var root = model_bebek.root_name;
+  var root = model_anjing.root_name;
   generateTree(defaultModel, root, treeClicked);
   window.onclick = function (event) {
     if (event.target == modal) {
@@ -77,7 +77,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_bebek.texture_mode,
+    texture: model_anjing.texture_mode,
   };
 
   var params2 = {
@@ -91,7 +91,7 @@ const main = () => {
     shading: false,
     fudgeFactor: 1,
     projType: "perspective",
-    texture: model_bebek.texture_mode,
+    texture: model_anjing.texture_mode,
   };
 
   var defParams = {
@@ -104,7 +104,7 @@ const main = () => {
     fudgeFactor: 1,
     projType: "perspective",
     shading: false,
-    texture: model_bebek.texture_mode,
+    texture: model_anjing.texture_mode,
   };
 
   // setup UI
