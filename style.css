@@ -32,6 +32,7 @@ body {
 .fixed-toolbar {
 	height: 100vh;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .fixed-toolbar::-webkit-scrollbar {
