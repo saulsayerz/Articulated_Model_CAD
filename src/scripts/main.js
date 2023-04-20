@@ -110,6 +110,9 @@ const main = () => {
   };
 
   // setup UI
+  const selectedPart = document.getElementById("selectedPart");
+  selectedPart.innerHTML = "Selected Part: " + params1.root;
+
   defaultSlider(1);
   defaultSlider(2);
   defaultCheckbox(1);
@@ -233,6 +236,8 @@ const main = () => {
         }
         copyObj["parts"].push(newPart);
       }
+      const selectedPart = document.getElementById("selectedPart");
+      selectedPart.innerHTML = "Selected Part: " + params1.root;
       var data = JSON.stringify(copyObj);
       var blob = new Blob([data], { type: "text/plain;charset=utf-8" });
       var url = URL.createObjectURL(blob);
@@ -620,6 +625,8 @@ const main = () => {
   function treeClicked(event) {
     params1.root = event.target.name;
     params2.root = event.target.name;
+    const selectedPart = document.getElementById("selectedPart");
+    selectedPart.innerHTML = "Selected Part: " + event.target.name;
     drawBothScene();
   }
 
